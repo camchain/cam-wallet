@@ -1,0 +1,18 @@
+﻿{
+  "ApplicationConfiguration": {
+    "Paths": {
+      "Chain": "Chain",
+      "CertCache": "Certs"
+    },
+    "P2P": {
+      "Port": 16333,
+      "WsPort": 16334
+    },
+    "Urls": {
+      "AddressUrl": "http://testnet.camchain.xyz:8060/address/{0}",
+      "AssetUrl": "http://testnet.camchain.xyz:8060/asset/hash/{0}",
+      "TransactionUrl": "http://testnet.camchain.xyz:8060/tx/hash/{0}"
+    }
+  }
+}
+
