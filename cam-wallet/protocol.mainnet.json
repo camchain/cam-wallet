@@ -12,13 +12,12 @@
       "024e98af5f83e2e3ace03362d4797be8e61a49872d8a4aec2f4394fbdb98429d1d"
     ],
     "SeedList": [
-      "110.88.128.61:18333",
-      "10.0.0.61:18333",
-      "10.0.0.62:18333",
-      "10.0.0.63:18333",
-      "10.0.0.64:18333",
-      "10.0.0.65:18333",
-      "10.0.0.66:18333"
+      "node1.camatrix.org:18333",
+      "node2.camatrix.org:18333",
+      "node3.camatrix.org:18333",
+      "node4.camatrix.org:18333",
+      "node5.camatrix.org:18333",
+      "node6.camatrix.org:18333"
     ],
     "SystemFee": {
       "EnrollmentTransaction": 0,
