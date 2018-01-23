@@ -2,14 +2,7 @@
 {
     partial class SigningDialog
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SigningDialog));
@@ -38,62 +27,35 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-
-
-
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-
-
-
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
-
-
-
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.textBox2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-
-
-
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-
-
-
             resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-
-
-
             resources.ApplyResources(this.button3, "button3");
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.button4, "button4");
             this.button4.Name = "button4";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-
-
-
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button3;

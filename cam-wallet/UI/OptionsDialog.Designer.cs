@@ -2,14 +2,7 @@
 {
     partial class OptionsDialog
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsDialog));
@@ -38,58 +27,34 @@
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-
-
-
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-
-
-
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.AcceptsReturn = true;
             this.textBox1.Name = "textBox1";
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Apply_Click);
-
-
-
             resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Apply_Click);
-
-
-
             resources.ApplyResources(this, "$this");
             this.AcceptButton = this.button1;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

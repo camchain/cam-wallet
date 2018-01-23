@@ -20,10 +20,10 @@
       "node6.camatrix.org:16333"
     ],
     "SystemFee": {
-      "EnrollmentTransaction": 0,
-      "IssueTransaction": 0,
-      "PublishTransaction": 0,
-      "RegisterTransaction": 0
+      "EnrollmentTransaction": 1000,
+      "IssueTransaction": 500,
+      "PublishTransaction": 500,
+      "RegisterTransaction": 10000
     }
   }
 }

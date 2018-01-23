@@ -31,53 +31,9 @@ namespace Cam
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [STAThread]
         public static void Main()
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = 
-
-         System.Globalization.CultureInfo.CreateSpecificCulture("en");
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
@@ -85,7 +41,6 @@ namespace Cam
             XDocument xdoc = null;
             try
             {
-
             }
             catch { }
             if (xdoc != null)
@@ -101,7 +56,6 @@ namespace Cam
                     return;
                 }
             }
-
             const string PeerStatePath = "peers.dat";
             if (File.Exists(PeerStatePath))
                 using (FileStream fs = new FileStream(PeerStatePath, FileMode.Open, FileAccess.Read, FileShare.Read))

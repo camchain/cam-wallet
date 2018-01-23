@@ -2,14 +2,7 @@
 {
     partial class ClaimForm
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClaimForm));
@@ -33,40 +22,22 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-
-
-
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-
-
-
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-
-
-
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-
-
-
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.textBox2);

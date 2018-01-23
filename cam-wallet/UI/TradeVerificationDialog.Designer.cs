@@ -2,14 +2,7 @@
 {
     partial class TradeVerificationDialog
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TradeVerificationDialog));
@@ -33,38 +22,23 @@
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.txOutListBox1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-
-
-
             this.txOutListBox1.Asset = null;
             resources.ApplyResources(this.txOutListBox1, "txOutListBox1");
             this.txOutListBox1.Name = "txOutListBox1";
             this.txOutListBox1.ReadOnly = true;
             this.txOutListBox1.ScriptHash = null;
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;

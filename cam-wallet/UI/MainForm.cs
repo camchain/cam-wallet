@@ -89,6 +89,7 @@ namespace Cam.UI
 
         private void AddTransaction(Transaction tx, uint? height, uint time)
         {
+            
             int? confirmations = (int)Blockchain.Default.Height - (int?)height + 1;
             if (confirmations <= 0) confirmations = null;
             string confirmations_str = confirmations?.ToString() ?? Strings.Unconfirmed;
@@ -117,13 +118,11 @@ namespace Cam.UI
                                 Name = "confirmations",
                                 Text = confirmations_str
                             },
-
                             new ListViewItem.ListViewSubItem
                             {
                                 Name = "txtype",
                                 Text = tx.Type.ToString()
                             }
-
 
                         }, -1)
                 {
@@ -174,19 +173,12 @@ namespace Cam.UI
                     }
                     Program.CurrentWallet.BalanceChanged += CurrentWallet_BalanceChanged;
                 }
-
                 修改密码CToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 交易TToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                提取GasCToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                requestCertificateToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                注册资产RToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                资产分发IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                deployContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                invokeContractToolStripMenuItem.Enabled = Program.CurrentWallet != null;
-                选举EToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 创建智能合约SToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+                重建钱包数据库RToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 listView1.Items.Clear();
                 if (Program.CurrentWallet != null)
                 {
@@ -198,7 +190,7 @@ namespace Cam.UI
                 balance_changed = true;
                 check_nep5_balance = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -271,7 +263,7 @@ namespace Cam.UI
                 {
                     Program.LocalNode.Start(Settings.Default.P2P.Port, Settings.Default.P2P.WsPort);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
@@ -280,8 +272,7 @@ namespace Cam.UI
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            if (MessageBox.Show("是否退出程序？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show(Strings.IsExitProgram, Strings.IsExitPrompt, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Blockchain.PersistCompleted -= Blockchain_PersistCompleted;
                 ChangeWallet(null);
@@ -535,7 +526,6 @@ namespace Cam.UI
                 ChangeWallet(wallet);
                 Settings.Default.LastWalletPath = dialog.WalletPath;
                 Settings.Default.Save();
-
                 toolStripStatusLabel6.Text = dialog.WalletPath;
             }
         }
@@ -547,7 +537,7 @@ namespace Cam.UI
                 if (dialog.ShowDialog() != DialogResult.OK) return;
                 string path = dialog.WalletPath;
                 Wallet wallet;
-                
+
                 NEP6Wallet nep6wallet = new NEP6Wallet(path);
                 try
                 {
@@ -559,20 +549,16 @@ namespace Cam.UI
                     return;
                 }
                 wallet = nep6wallet;
-               
+
                 ChangeWallet(wallet);
                 Settings.Default.LastWalletPath = path;
                 Settings.Default.Save();
-
                 toolStripStatusLabel6.Text = path;
             }
         }
 
         private void 修改密码CToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
-
             using (ChangePasswordDialog dialog = new ChangePasswordDialog())
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
@@ -585,21 +571,24 @@ namespace Cam.UI
 
         private void 重建钱包数据库RToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            listView2.Items.Clear();
-            listView3.Items.Clear();
-            WalletIndexer.RebuildIndex();
+            try
+            {
+                listView2.Items.Clear();
+                listView3.Items.Clear();
+                WalletIndexer.RebuildIndex();
 
-            NEP6Wallet nEP6Wallet = new NEP6Wallet(Settings.Default.LastWalletPath);
-            NEP6Wallet lastWallet = (NEP6Wallet)Program.CurrentWallet;
-            nEP6Wallet.Unlock(lastWallet.password);
+                NEP6Wallet nEP6Wallet = new NEP6Wallet(Settings.Default.LastWalletPath);
+                NEP6Wallet lastWallet = (NEP6Wallet)Program.CurrentWallet;
+                nEP6Wallet.Unlock(lastWallet.password);
 
-            Wallet wallet = nEP6Wallet;
+                Wallet wallet = nEP6Wallet;
 
-            ChangeWallet(wallet);
-
-
-
-
+                ChangeWallet(wallet);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("重建索引错误，请先打开钱包");
+            }
             Program.LocalNode.ClearMemoryPool();
             Program.LocalNode.SynchronizeMemoryPool();
         }
@@ -648,93 +637,6 @@ namespace Cam.UI
             }
         }
 
-        private void 提取小蚁币CToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Helper.Show<ClaimForm>();
-        }
-
-        private void requestCertificateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (CertificateRequestWizard wizard = new UI.CertificateRequestWizard())
-            {
-                wizard.ShowDialog();
-            }
-        }
-
-        private void 注册资产RToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            InvocationTransaction tx;
-            using (AssetRegisterDialog dialog = new AssetRegisterDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            Helper.SignAndShowInformation(tx);
-        }
-
-        private void 资产分发IToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (IssueDialog dialog = new IssueDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                Helper.SignAndShowInformation(dialog.GetTransaction());
-            }
-        }
-
-        private void deployContractToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            InvocationTransaction tx;
-            using (DeployContractDialog dialog = new DeployContractDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            Helper.SignAndShowInformation(tx);
-        }
-
-        private void invokeContractToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (InvokeContractDialog dialog = new InvokeContractDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                Helper.SignAndShowInformation(dialog.GetTransaction());
-            }
-        }
-
-        private void 选举EToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            InvocationTransaction tx;
-            using (ElectionDialog dialog = new ElectionDialog())
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            using (InvokeContractDialog dialog = new InvokeContractDialog(tx))
-            {
-                if (dialog.ShowDialog() != DialogResult.OK) return;
-                tx = dialog.GetTransaction();
-            }
-            Helper.SignAndShowInformation(tx);
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OptionsDialog dialog = new OptionsDialog())
-            {
-                dialog.ShowDialog();
-            }
-        }
-
         private void 官网WToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://www.camatrix.org/");
@@ -759,11 +661,6 @@ namespace Cam.UI
             viewContractToolStripMenuItem.Enabled =
                 listView1.SelectedIndices.Count == 1 &&
                 !((WalletAccount)listView1.SelectedItems[0].Tag).WatchOnly;
-            voteToolStripMenuItem.Enabled =
-                listView1.SelectedIndices.Count == 1 &&
-                !((WalletAccount)listView1.SelectedItems[0].Tag).WatchOnly &&
-                !string.IsNullOrEmpty(listView1.SelectedItems[0].SubItems["gas"].Text) &&
-                decimal.Parse(listView1.SelectedItems[0].SubItems["gas"].Text) > 0;
             复制到剪贴板CToolStripMenuItem.Enabled = listView1.SelectedIndices.Count == 1;
             删除DToolStripMenuItem.Enabled = listView1.SelectedIndices.Count > 0;
         }
@@ -835,8 +732,17 @@ namespace Cam.UI
                     {
                         continue;
                     }
-                    WalletAccount account = Program.CurrentWallet.CreateAccount(scriptHash);
-                    AddAccount(account, true);
+                    try
+                    {
+                        WalletAccount account = Program.CurrentWallet.CreateAccount(scriptHash);
+
+                        AddAccount(account, true);
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             }
             if (Program.CurrentWallet is NEP6Wallet wallet)
@@ -1014,10 +920,10 @@ namespace Cam.UI
             try
             {
                 if (listView1.SelectedIndices.Count == 0) return;
-                string url = string.Format(Settings.Default.Urls.AddressUrl,listView1.SelectedItems[0].Text);
+                string url = string.Format(Settings.Default.Urls.AddressUrl, listView1.SelectedItems[0].Text);
                 Process.Start(url);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("web site connection timed out");
             }
@@ -1026,16 +932,16 @@ namespace Cam.UI
         private void listView2_DoubleClick(object sender, EventArgs e)
         {
             try
-            { 
-            if (listView2.SelectedIndices.Count == 0) return;
-            string url = string.Format(Settings.Default.Urls.AssetUrl, "0x" + listView2.SelectedItems[0].Name.Substring(2));
-            Process.Start(url);
+            {
+                if (listView2.SelectedIndices.Count == 0) return;
+                string url = string.Format(Settings.Default.Urls.AssetUrl, "0x" + listView2.SelectedItems[0].Name.Substring(2));
+                Process.Start(url);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("web site connection timed out");
             }
-}
+        }
 
         private void listView3_DoubleClick(object sender, EventArgs e)
         {
@@ -1045,7 +951,7 @@ namespace Cam.UI
                 string url = string.Format(Settings.Default.Urls.TransactionUrl, "0x" + listView3.SelectedItems[0].Name.Substring(2));
                 Process.Start(url);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("web site connection timed out");
             }
@@ -1058,14 +964,21 @@ namespace Cam.UI
                 dialog.ShowDialog();
             }
         }
-
-
-
-
-
         private void gasClaimToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Helper.Show<ClaimForm>();
+        }
+
+        private void vefryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void verifyContractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            VerifyContractDialog dialog = new VerifyContractDialog();
+            dialog.ShowDialog();
         }
     }
 }

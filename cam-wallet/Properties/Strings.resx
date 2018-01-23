@@ -186,6 +186,12 @@
   <data name="InvalidCertificate" xml:space="preserve">
     <value>Invalid</value>
   </data>
+  <data name="IsExitProgram" xml:space="preserve">
+    <value>Are you sure you want to quit?</value>
+  </data>
+  <data name="IsExitPrompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
   <data name="MigrateWalletCaption" xml:space="preserve">
     <value>Migrate Wallet</value>
   </data>
@@ -258,5 +264,14 @@ Note: updated files cannot be openned by clients in older versions!</value>
   </data>
   <data name="UnsynchronizedBlock" xml:space="preserve">
     <value>Blockchain unsynchronized, transaction cannot be sent.</value>
+  </data>
+  <data name="VerifyContractFail" xml:space="preserve">
+    <value>Validation failed, address error</value>
+  </data>
+  <data name="VerifyContractFail2" xml:space="preserve">
+    <value>Validation failed, contract error</value>
+  </data>
+  <data name="VerifyContractSuccess" xml:space="preserve">
+    <value>Validation is successful</value>
   </data>
 </root>

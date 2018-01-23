@@ -1,22 +1,6 @@
 ﻿
-
-
-
-
-
-
-
-
-
 namespace Cam.Properties {
     using System;
-
-
-
-
-
-
-
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -29,9 +13,6 @@ namespace Cam.Properties {
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
-
-
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
@@ -42,10 +23,6 @@ namespace Cam.Properties {
                 return resourceMan;
             }
         }
-
-
-
-
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
@@ -55,54 +32,36 @@ namespace Cam.Properties {
                 resourceCulture = value;
             }
         }
-
-
-
         internal static System.Drawing.Bitmap add {
             get {
                 object obj = ResourceManager.GetObject("add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
-
         internal static System.Drawing.Bitmap add2 {
             get {
                 object obj = ResourceManager.GetObject("add2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
-
         internal static System.Drawing.Bitmap remark {
             get {
                 object obj = ResourceManager.GetObject("remark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
-
         internal static System.Drawing.Bitmap remove {
             get {
                 object obj = ResourceManager.GetObject("remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
-
         internal static System.Drawing.Bitmap search {
             get {
                 object obj = ResourceManager.GetObject("search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
-
-
         internal static byte[] UpdateBat {
             get {
                 object obj = ResourceManager.GetObject("UpdateBat", resourceCulture);

@@ -2,14 +2,7 @@
 {
     partial class ImportCustomContractDialog
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportCustomContractDialog));
@@ -37,57 +26,30 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-
-
-
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-
-
-
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.TextChanged += new System.EventHandler(this.Input_Changed);
-
-
-
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.TextChanged += new System.EventHandler(this.Input_Changed);
-
-
-
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Name = "textBox3";
-
-
-
             this.AcceptButton = this.button1;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

@@ -186,6 +186,12 @@
   <data name="InvalidCertificate" xml:space="preserve">
     <value>证书错误</value>
   </data>
+  <data name="IsExitProgram" xml:space="preserve">
+    <value>是否退出程序？</value>
+  </data>
+  <data name="IsExitPrompt" xml:space="preserve">
+    <value>提示</value>
+  </data>
   <data name="MigrateWalletCaption" xml:space="preserve">
     <value>钱包文件升级</value>
   </data>
@@ -258,5 +264,14 @@
   </data>
   <data name="UnsynchronizedBlock" xml:space="preserve">
     <value>区块链未同步完成，无法发送该交易。</value>
+  </data>
+  <data name="VerifyContractFail" xml:space="preserve">
+    <value>验证失败，地址不匹配</value>
+  </data>
+  <data name="VerifyContractFail2" xml:space="preserve">
+    <value>验证失败，合约错误</value>
+  </data>
+  <data name="VerifyContractSuccess" xml:space="preserve">
+    <value>验证成功</value>
   </data>
 </root>

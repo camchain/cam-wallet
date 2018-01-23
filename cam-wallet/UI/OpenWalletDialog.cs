@@ -14,7 +14,6 @@ namespace Cam.UI
             if (File.Exists(Settings.Default.LastWalletPath))
             {
                 textBox1.Text = Settings.Default.LastWalletPath;
-
                 this.ActiveControl = textBox2;
             }
         }

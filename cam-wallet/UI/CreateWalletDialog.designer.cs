@@ -2,14 +2,7 @@
 {
     partial class CreateWalletDialog
     {
-
-
-
         private System.ComponentModel.IContainer components = null;
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,10 +13,6 @@
         }
 
         #region Windows Form Designer generated code
-
-
-
-
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateWalletDialog));
@@ -37,64 +26,34 @@
             this.button2 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
-
-
-
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-
-
-
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-
-
-
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-
-
-
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-
-
-
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.UseSystemPasswordChar = true;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-
-
-
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-
-
-
             resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Name = "textBox3";
             this.textBox3.UseSystemPasswordChar = true;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-
-
-
             resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
-
-
-
             this.saveFileDialog1.DefaultExt = "json";
             resources.ApplyResources(this.saveFileDialog1, "saveFileDialog1");
-
-
-
             this.AcceptButton = this.button2;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

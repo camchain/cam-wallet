@@ -528,4 +528,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>cam-wallet</value>
   </data>
+  <data name="verifyContractToolStripMenuItem.Text" xml:space="preserve">
+    <value>验证合约(&amp;V)...</value>
+  </data>
 </root>
