@@ -89,7 +89,7 @@ namespace Cam.UI
 
         private void AddTransaction(Transaction tx, uint? height, uint time)
         {
-            
+
             int? confirmations = (int)Blockchain.Default.Height - (int?)height + 1;
             if (confirmations <= 0) confirmations = null;
             string confirmations_str = confirmations?.ToString() ?? Strings.Unconfirmed;
@@ -118,11 +118,13 @@ namespace Cam.UI
                                 Name = "confirmations",
                                 Text = confirmations_str
                             },
+
                             new ListViewItem.ListViewSubItem
                             {
                                 Name = "txtype",
                                 Text = tx.Type.ToString()
                             }
+
 
                         }, -1)
                 {
@@ -173,8 +175,16 @@ namespace Cam.UI
                     }
                     Program.CurrentWallet.BalanceChanged += CurrentWallet_BalanceChanged;
                 }
+
                 修改密码CToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 交易TToolStripMenuItem.Enabled = Program.CurrentWallet != null;
+
+
+
+
+
+
+
                 创建新地址NToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 导入私钥IToolStripMenuItem.Enabled = Program.CurrentWallet != null;
                 创建智能合约SToolStripMenuItem.Enabled = Program.CurrentWallet != null;
@@ -199,6 +209,7 @@ namespace Cam.UI
         private void CurrentWallet_BalanceChanged(object sender, BalanceEventArgs e)
         {
             balance_changed = true;
+
             BeginInvoke(new Action<Transaction, uint?, uint>(AddTransaction), e.Transaction, e.Height, e.Time);
         }
 
@@ -235,6 +246,8 @@ namespace Cam.UI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            CheckForIllegalCrossThreadCalls = false;
+
             Task.Run(() =>
             {
                 const string acc_path = "chain.acc";
@@ -272,6 +285,7 @@ namespace Cam.UI
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+
             if (MessageBox.Show(Strings.IsExitProgram, Strings.IsExitPrompt, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Blockchain.PersistCompleted -= Blockchain_PersistCompleted;
@@ -286,83 +300,88 @@ namespace Cam.UI
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            uint walletHeight = 0;
 
-            if (Program.CurrentWallet != null)
+            BeginInvoke(new Action(() =>
             {
-                walletHeight = (Program.CurrentWallet.WalletHeight > 0) ? Program.CurrentWallet.WalletHeight - 1 : 0;
-            }
 
-            lbl_height.Text = $"{walletHeight}/{Blockchain.Default.Height}/{Blockchain.Default.HeaderHeight}";
+                uint walletHeight = 0;
 
-            lbl_count_node.Text = Program.LocalNode.RemoteNodeCount.ToString();
-            TimeSpan persistence_span = DateTime.UtcNow - persistence_time;
-            if (persistence_span < TimeSpan.Zero) persistence_span = TimeSpan.Zero;
-            if (persistence_span > Blockchain.TimePerBlock)
-            {
-                toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
-            }
-            else
-            {
-                toolStripProgressBar1.Value = persistence_span.Seconds;
-                toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
-            }
-            if (Program.CurrentWallet != null)
-            {
-                if (Program.CurrentWallet.WalletHeight <= Blockchain.Default.Height + 1)
+                if (Program.CurrentWallet != null)
                 {
-                    if (balance_changed)
+                    walletHeight = (Program.CurrentWallet.WalletHeight > 0) ? Program.CurrentWallet.WalletHeight - 1 : 0;
+                }
+
+                lbl_height.Text = $"{walletHeight}/{Blockchain.Default.Height}/{Blockchain.Default.HeaderHeight}";
+
+                lbl_count_node.Text = Program.LocalNode.RemoteNodeCount.ToString();
+
+                TimeSpan persistence_span = DateTime.UtcNow - persistence_time;
+                if (persistence_span < TimeSpan.Zero) persistence_span = TimeSpan.Zero;
+                if (persistence_span > Blockchain.TimePerBlock)
+                {
+                    toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
+                }
+                else
+                {
+                    toolStripProgressBar1.Value = persistence_span.Seconds;
+                    toolStripProgressBar1.Style = ProgressBarStyle.Blocks;
+                }
+                if (Program.CurrentWallet != null)
+                {
+                    if (Program.CurrentWallet.WalletHeight <= Blockchain.Default.Height + 1)
                     {
-                        IEnumerable<Coin> coins = Program.CurrentWallet?.GetCoins().Where(p => !p.State.HasFlag(CoinState.Spent)) ?? Enumerable.Empty<Coin>();
-                        Fixed8 bonus_available = Blockchain.CalculateBonus(Program.CurrentWallet.GetUnclaimedCoins().Select(p => p.Reference));
-                        Fixed8 bonus_unavailable = Blockchain.CalculateBonus(coins.Where(p => p.State.HasFlag(CoinState.Confirmed) && p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).Select(p => p.Reference), Blockchain.Default.Height + 1);
-                        Fixed8 bonus = bonus_available + bonus_unavailable;
-                        var assets = coins.GroupBy(p => p.Output.AssetId, (k, g) => new
+                        if (balance_changed)
                         {
-                            Asset = Blockchain.Default.GetAssetState(k),
-                            Value = g.Sum(p => p.Output.Value),
-                            Claim = k.Equals(Blockchain.UtilityToken.Hash) ? bonus : Fixed8.Zero
-                        }).ToDictionary(p => p.Asset.AssetId);
-                        if (bonus != Fixed8.Zero && !assets.ContainsKey(Blockchain.UtilityToken.Hash))
-                        {
-                            assets[Blockchain.UtilityToken.Hash] = new
+                            IEnumerable<Coin> coins = Program.CurrentWallet?.GetCoins().Where(p => !p.State.HasFlag(CoinState.Spent)) ?? Enumerable.Empty<Coin>();
+                            Fixed8 bonus_available = Blockchain.CalculateBonus(Program.CurrentWallet.GetUnclaimedCoins().Select(p => p.Reference));
+                            Fixed8 bonus_unavailable = Blockchain.CalculateBonus(coins.Where(p => p.State.HasFlag(CoinState.Confirmed) && p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).Select(p => p.Reference), Blockchain.Default.Height + 1);
+                            Fixed8 bonus = bonus_available + bonus_unavailable;
+                            var assets = coins.GroupBy(p => p.Output.AssetId, (k, g) => new
                             {
-                                Asset = Blockchain.Default.GetAssetState(Blockchain.UtilityToken.Hash),
-                                Value = Fixed8.Zero,
-                                Claim = bonus
-                            };
-                        }
-                        var balance_ans = coins.Where(p => p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
-                        var balance_anc = coins.Where(p => p.Output.AssetId.Equals(Blockchain.UtilityToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
-                        foreach (ListViewItem item in listView1.Items)
-                        {
-                            UInt160 script_hash = Wallet.ToScriptHash(item.Name);
-                            Fixed8 ans = balance_ans.ContainsKey(script_hash) ? balance_ans[script_hash] : Fixed8.Zero;
-                            Fixed8 anc = balance_anc.ContainsKey(script_hash) ? balance_anc[script_hash] : Fixed8.Zero;
-                            item.SubItems["cam"].Text = ans.ToString();
-                            item.SubItems["gas"].Text = anc.ToString();
-                        }
-                        foreach (AssetState asset in listView2.Items.OfType<ListViewItem>().Select(p => p.Tag as AssetState).Where(p => p != null).ToArray())
-                        {
-                            if (!assets.ContainsKey(asset.AssetId))
+                                Asset = Blockchain.Default.GetAssetState(k),
+                                Value = g.Sum(p => p.Output.Value),
+                                Claim = k.Equals(Blockchain.UtilityToken.Hash) ? bonus : Fixed8.Zero
+                            }).ToDictionary(p => p.Asset.AssetId);
+                            if (bonus != Fixed8.Zero && !assets.ContainsKey(Blockchain.UtilityToken.Hash))
                             {
-                                listView2.Items.RemoveByKey(asset.AssetId.ToString());
-                            }
-                        }
-                        foreach (var asset in assets.Values)
-                        {
-                            string value_text = asset.Value.ToString() + (asset.Asset.AssetId.Equals(Blockchain.UtilityToken.Hash) ? $"+({asset.Claim})" : "");
-                            if (listView2.Items.ContainsKey(asset.Asset.AssetId.ToString()))
-                            {
-                                listView2.Items[asset.Asset.AssetId.ToString()].SubItems["value"].Text = value_text;
-                            }
-                            else
-                            {
-                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "CAM" :
-                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "GAS" :
-                                                    asset.Asset.GetName();
-                                listView2.Items.Add(new ListViewItem(new[]
+                                assets[Blockchain.UtilityToken.Hash] = new
                                 {
+                                    Asset = Blockchain.Default.GetAssetState(Blockchain.UtilityToken.Hash),
+                                    Value = Fixed8.Zero,
+                                    Claim = bonus
+                                };
+                            }
+                            var balance_ans = coins.Where(p => p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
+                            var balance_anc = coins.Where(p => p.Output.AssetId.Equals(Blockchain.UtilityToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
+                            foreach (ListViewItem item in listView1.Items)
+                            {
+                                UInt160 script_hash = Wallet.ToScriptHash(item.Name);
+                                Fixed8 ans = balance_ans.ContainsKey(script_hash) ? balance_ans[script_hash] : Fixed8.Zero;
+                                Fixed8 anc = balance_anc.ContainsKey(script_hash) ? balance_anc[script_hash] : Fixed8.Zero;
+                                item.SubItems["cam"].Text = ans.ToString();
+                                item.SubItems["gas"].Text = anc.ToString();
+                            }
+                            foreach (AssetState asset in listView2.Items.OfType<ListViewItem>().Select(p => p.Tag as AssetState).Where(p => p != null).ToArray())
+                            {
+                                if (!assets.ContainsKey(asset.AssetId))
+                                {
+                                    listView2.Items.RemoveByKey(asset.AssetId.ToString());
+                                }
+                            }
+                            foreach (var asset in assets.Values)
+                            {
+                                string value_text = asset.Value.ToString() + (asset.Asset.AssetId.Equals(Blockchain.UtilityToken.Hash) ? $"+({asset.Claim})" : "");
+                                if (listView2.Items.ContainsKey(asset.Asset.AssetId.ToString()))
+                                {
+                                    listView2.Items[asset.Asset.AssetId.ToString()].SubItems["value"].Text = value_text;
+                                }
+                                else
+                                {
+                                    string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "CAM" :
+                                                        asset.Asset.AssetType == AssetType.UtilityToken ? "GAS" :
+                                                        asset.Asset.GetName();
+                                    listView2.Items.Add(new ListViewItem(new[]
+                                    {
                                     new ListViewItem.ListViewSubItem
                                     {
                                         Name = "name",
@@ -385,102 +404,102 @@ namespace Cam.UI
                                         Text = $"{Strings.UnknownIssuer}[{asset.Asset.Owner}]"
                                     }
                                 }, -1, listView2.Groups["unchecked"])
+                                    {
+                                        Name = asset.Asset.AssetId.ToString(),
+                                        Tag = asset.Asset,
+                                        UseItemStyleForSubItems = false
+                                    });
+                                }
+                            }
+                            balance_changed = false;
+                        }
+                        foreach (ListViewItem item in listView2.Groups["unchecked"].Items.OfType<ListViewItem>().ToArray())
+                        {
+                            ListViewItem.ListViewSubItem subitem = item.SubItems["issuer"];
+                            AssetState asset = (AssetState)item.Tag;
+                            CertificateQueryResult result;
+                            if (asset.AssetType == AssetType.GoverningToken || asset.AssetType == AssetType.UtilityToken)
+                            {
+                                result = new CertificateQueryResult { Type = CertificateQueryResultType.System };
+                            }
+                            else
+                            {
+                                result = CertificateQueryService.Query(asset.Owner);
+                            }
+                            using (result)
+                            {
+                                subitem.Tag = result.Type;
+                                switch (result.Type)
                                 {
-                                    Name = asset.Asset.AssetId.ToString(),
-                                    Tag = asset.Asset,
-                                    UseItemStyleForSubItems = false
-                                });
-                            }
-                        }
-                        balance_changed = false;
-                    }
-                    foreach (ListViewItem item in listView2.Groups["unchecked"].Items.OfType<ListViewItem>().ToArray())
-                    {
-                        ListViewItem.ListViewSubItem subitem = item.SubItems["issuer"];
-                        AssetState asset = (AssetState)item.Tag;
-                        CertificateQueryResult result;
-                        if (asset.AssetType == AssetType.GoverningToken || asset.AssetType == AssetType.UtilityToken)
-                        {
-                            result = new CertificateQueryResult { Type = CertificateQueryResultType.System };
-                        }
-                        else
-                        {
-                            result = CertificateQueryService.Query(asset.Owner);
-                        }
-                        using (result)
-                        {
-                            subitem.Tag = result.Type;
-                            switch (result.Type)
-                            {
-                                case CertificateQueryResultType.Querying:
-                                case CertificateQueryResultType.QueryFailed:
-                                    break;
-                                case CertificateQueryResultType.System:
-                                    subitem.ForeColor = Color.Green;
-                                    subitem.Text = Strings.SystemIssuer;
-                                    break;
-                                case CertificateQueryResultType.Invalid:
-                                    subitem.ForeColor = Color.Red;
-                                    subitem.Text = $"[{Strings.InvalidCertificate}][{asset.Owner}]";
-                                    break;
-                                case CertificateQueryResultType.Expired:
-                                    subitem.ForeColor = Color.Yellow;
-                                    subitem.Text = $"[{Strings.ExpiredCertificate}]{result.Certificate.Subject}[{asset.Owner}]";
-                                    break;
-                                case CertificateQueryResultType.Good:
-                                    subitem.ForeColor = Color.Black;
-                                    subitem.Text = $"{result.Certificate.Subject}[{asset.Owner}]";
-                                    break;
-                            }
-                            switch (result.Type)
-                            {
-                                case CertificateQueryResultType.System:
-                                case CertificateQueryResultType.Missing:
-                                case CertificateQueryResultType.Invalid:
-                                case CertificateQueryResultType.Expired:
-                                case CertificateQueryResultType.Good:
-                                    item.Group = listView2.Groups["checked"];
-                                    break;
+                                    case CertificateQueryResultType.Querying:
+                                    case CertificateQueryResultType.QueryFailed:
+                                        break;
+                                    case CertificateQueryResultType.System:
+                                        subitem.ForeColor = Color.Green;
+                                        subitem.Text = Strings.SystemIssuer;
+                                        break;
+                                    case CertificateQueryResultType.Invalid:
+                                        subitem.ForeColor = Color.Red;
+                                        subitem.Text = $"[{Strings.InvalidCertificate}][{asset.Owner}]";
+                                        break;
+                                    case CertificateQueryResultType.Expired:
+                                        subitem.ForeColor = Color.Yellow;
+                                        subitem.Text = $"[{Strings.ExpiredCertificate}]{result.Certificate.Subject}[{asset.Owner}]";
+                                        break;
+                                    case CertificateQueryResultType.Good:
+                                        subitem.ForeColor = Color.Black;
+                                        subitem.Text = $"{result.Certificate.Subject}[{asset.Owner}]";
+                                        break;
+                                }
+                                switch (result.Type)
+                                {
+                                    case CertificateQueryResultType.System:
+                                    case CertificateQueryResultType.Missing:
+                                    case CertificateQueryResultType.Invalid:
+                                    case CertificateQueryResultType.Expired:
+                                    case CertificateQueryResultType.Good:
+                                        item.Group = listView2.Groups["checked"];
+                                        break;
+                                }
                             }
                         }
                     }
-                }
-                if (check_nep5_balance && persistence_span > TimeSpan.FromSeconds(2))
-                {
-                    UInt160[] addresses = Program.CurrentWallet.GetAccounts().Select(p => p.ScriptHash).ToArray();
-                    foreach (string s in Settings.Default.NEP5Watched)
+                    if (check_nep5_balance && persistence_span > TimeSpan.FromSeconds(2))
                     {
-                        UInt160 script_hash = UInt160.Parse(s);
-                        byte[] script;
-                        using (ScriptBuilder sb = new ScriptBuilder())
+                        UInt160[] addresses = Program.CurrentWallet.GetAccounts().Select(p => p.ScriptHash).ToArray();
+                        foreach (string s in Settings.Default.NEP5Watched)
                         {
-                            foreach (UInt160 address in addresses)
-                                sb.EmitAppCall(script_hash, "balanceOf", address);
-                            sb.Emit(OpCode.DEPTH, OpCode.PACK);
-                            sb.EmitAppCall(script_hash, "decimals");
-                            sb.EmitAppCall(script_hash, "name");
-                            script = sb.ToArray();
-                        }
-                        ApplicationEngine engine = ApplicationEngine.Run(script);
-                        if (engine.State.HasFlag(VMState.FAULT)) continue;
-                        string name = engine.EvaluationStack.Pop().GetString();
-                        byte decimals = (byte)engine.EvaluationStack.Pop().GetBigInteger();
-                        BigInteger amount = engine.EvaluationStack.Pop().GetArray().Aggregate(BigInteger.Zero, (x, y) => x + y.GetBigInteger());
-                        if (amount == 0)
-                        {
-                            listView2.Items.RemoveByKey(script_hash.ToString());
-                            continue;
-                        }
-                        BigDecimal balance = new BigDecimal(amount, decimals);
-                        string value_text = balance.ToString();
-                        if (listView2.Items.ContainsKey(script_hash.ToString()))
-                        {
-                            listView2.Items[script_hash.ToString()].SubItems["value"].Text = value_text;
-                        }
-                        else
-                        {
-                            listView2.Items.Add(new ListViewItem(new[]
+                            UInt160 script_hash = UInt160.Parse(s);
+                            byte[] script;
+                            using (ScriptBuilder sb = new ScriptBuilder())
                             {
+                                foreach (UInt160 address in addresses)
+                                    sb.EmitAppCall(script_hash, "balanceOf", address);
+                                sb.Emit(OpCode.DEPTH, OpCode.PACK);
+                                sb.EmitAppCall(script_hash, "decimals");
+                                sb.EmitAppCall(script_hash, "name");
+                                script = sb.ToArray();
+                            }
+                            ApplicationEngine engine = ApplicationEngine.Run(script);
+                            if (engine.State.HasFlag(VMState.FAULT)) continue;
+                            string name = engine.EvaluationStack.Pop().GetString();
+                            byte decimals = (byte)engine.EvaluationStack.Pop().GetBigInteger();
+                            BigInteger amount = engine.EvaluationStack.Pop().GetArray().Aggregate(BigInteger.Zero, (x, y) => x + y.GetBigInteger());
+                            if (amount == 0)
+                            {
+                                listView2.Items.RemoveByKey(script_hash.ToString());
+                                continue;
+                            }
+                            BigDecimal balance = new BigDecimal(amount, decimals);
+                            string value_text = balance.ToString();
+                            if (listView2.Items.ContainsKey(script_hash.ToString()))
+                            {
+                                listView2.Items[script_hash.ToString()].SubItems["value"].Text = value_text;
+                            }
+                            else
+                            {
+                                listView2.Items.Add(new ListViewItem(new[]
+                                {
                                 new ListViewItem.ListViewSubItem
                                 {
                                     Name = "name",
@@ -503,15 +522,18 @@ namespace Cam.UI
                                     Text = $"ScriptHash:{script_hash}"
                                 }
                             }, -1, listView2.Groups["checked"])
-                            {
-                                Name = script_hash.ToString(),
-                                UseItemStyleForSubItems = false
-                            });
+                                {
+                                    Name = script_hash.ToString(),
+                                    UseItemStyleForSubItems = false
+                                });
+                            }
                         }
+                        check_nep5_balance = false;
                     }
-                    check_nep5_balance = false;
                 }
-            }
+
+            }));
+
         }
 
         private void 创建钱包数据库NToolStripMenuItem_Click(object sender, EventArgs e)
@@ -524,8 +546,10 @@ namespace Cam.UI
                 wallet.CreateAccount();
                 wallet.Save();
                 ChangeWallet(wallet);
+
                 Settings.Default.LastWalletPath = dialog.WalletPath;
                 Settings.Default.Save();
+
                 toolStripStatusLabel6.Text = dialog.WalletPath;
             }
         }
@@ -553,12 +577,79 @@ namespace Cam.UI
                 ChangeWallet(wallet);
                 Settings.Default.LastWalletPath = path;
                 Settings.Default.Save();
+
                 toolStripStatusLabel6.Text = path;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
+        }
+        public Stopwatch stopwatch = new Stopwatch();
+        private bool WalletPassword(NEP6Wallet nep6wallet, string passWord)
+        {
+            Debug.WriteLine("密码:" + passWord);
+            stopwatch.Start();
+            Debug.WriteLine("开始时间:" + DateTime.Now.ToString());
+
+
+            if (!nep6wallet.VerifyPassword(passWord))
+            {
+
+
+
+
+                return false;
+            }
+
+
+
+
+
+
+
+
+
+
+
+            Debug.WriteLine("结束时间:" + DateTime.Now.ToString());
+            stopwatch.Stop();
+
+            Debug.WriteLine("用时:" + stopwatch.ElapsedTicks);
+
+            return true;
         }
 
         private void 修改密码CToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+
+
             using (ChangePasswordDialog dialog = new ChangePasswordDialog())
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
@@ -589,6 +680,10 @@ namespace Cam.UI
             {
                 MessageBox.Show("重建索引错误，请先打开钱包");
             }
+
+
+
+
             Program.LocalNode.ClearMemoryPool();
             Program.LocalNode.SynchronizeMemoryPool();
         }
@@ -637,6 +732,85 @@ namespace Cam.UI
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void 官网WToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://www.camatrix.org/");
@@ -661,6 +835,11 @@ namespace Cam.UI
             viewContractToolStripMenuItem.Enabled =
                 listView1.SelectedIndices.Count == 1 &&
                 !((WalletAccount)listView1.SelectedItems[0].Tag).WatchOnly;
+
+
+
+
+
             复制到剪贴板CToolStripMenuItem.Enabled = listView1.SelectedIndices.Count == 1;
             删除DToolStripMenuItem.Enabled = listView1.SelectedIndices.Count > 0;
         }
@@ -732,13 +911,23 @@ namespace Cam.UI
                     {
                         continue;
                     }
+
+
+
+
+
+
+
+
+
                     try
                     {
+
                         WalletAccount account = Program.CurrentWallet.CreateAccount(scriptHash);
 
                         AddAccount(account, true);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
@@ -804,6 +993,8 @@ namespace Cam.UI
         private void 查看私钥VToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WalletAccount account = (WalletAccount)listView1.SelectedItems[0].Tag;
+
+
             using (ViewPrivateKeyDialog dialog = new ViewPrivateKeyDialog(account))
             {
                 dialog.ShowDialog();
@@ -964,6 +1155,11 @@ namespace Cam.UI
                 dialog.ShowDialog();
             }
         }
+
+
+
+
+
         private void gasClaimToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Helper.Show<ClaimForm>();
@@ -976,6 +1172,13 @@ namespace Cam.UI
 
         private void verifyContractToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+
+
+
+
+
+
 
             VerifyContractDialog dialog = new VerifyContractDialog();
             dialog.ShowDialog();

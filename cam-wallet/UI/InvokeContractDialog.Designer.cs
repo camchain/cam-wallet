@@ -2,7 +2,14 @@
 {
     partial class InvokeContractDialog
     {
+
+
+
         private System.ComponentModel.IContainer components = null;
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,6 +20,10 @@
         }
 
         #region Windows Form Designer generated code
+
+
+
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvokeContractDialog));
@@ -46,70 +57,136 @@
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+
+
+
             resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+
+
+
             resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
+
+
+
             resources.ApplyResources(this.textBox4, "textBox4");
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
+
+
+
             resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+
+
+
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
+
+
+
             resources.ApplyResources(this.button1, "button1");
             this.button1.Image = global::Cam.Properties.Resources.search;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+
+
+
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+
+
+
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+
+
+
             resources.ApplyResources(this.button6, "button6");
             this.button6.Name = "button6";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+
+
+
             resources.ApplyResources(this.textBox6, "textBox6");
             this.textBox6.Name = "textBox6";
             this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+
+
+
             resources.ApplyResources(this.button3, "button3");
             this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.button4, "button4");
             this.button4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button4.Name = "button4";
             this.button4.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
+
+
+
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
+
+
+
             resources.ApplyResources(this.button5, "button5");
             this.button5.Name = "button5";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+
+
+
             resources.ApplyResources(this.openFileDialog1, "openFileDialog1");
             this.openFileDialog1.DefaultExt = "avm";
+
+
+
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
+
+
+
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.label1);
@@ -125,18 +202,30 @@
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Controls.Add(this.button6);
             this.tabPage2.Controls.Add(this.textBox6);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.textBox7);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+
+
+
             resources.ApplyResources(this.textBox7, "textBox7");
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
+
+
+
             resources.ApplyResources(this, "$this");
             this.AcceptButton = this.button3;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

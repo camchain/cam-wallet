@@ -1,23 +1,23 @@
 {
   "ProtocolConfiguration": {
-    "Magic": 2668,
+    "Magic": 8229305,
     "AddressVersion": 23,
     "StandbyValidators": [
-      "028ccf3bed30de2a08c989e404d193f4132c76451f38bbcaeabcc5e4002fce2648",
-      "028127773489a374ac27abfd2f05f8256efc1da1c8965e7f6a6f973a901a991315",
-      "03df219143e32dfe7370b0d9574c4d5fe4336454b37bf28bfcef4e4cb4166f06a5",
-      "0315f92379e50165a15259ce5bf2581daa700765f37b2fc9e0bf86d5db56402409",
-      "0381b8d28ab293d1416cfe0fc956273d346d13b439d562160e89fa39dff4a2fe09",
-      "038461a0123eb1ccf7514c676fdd1052d1995eaa5d055316239436c0dfd74ac290",
-      "024e98af5f83e2e3ace03362d4797be8e61a49872d8a4aec2f4394fbdb98429d1d"
+      "03681649df11f826afc16adceab7af57bc937e290da08323502fda7d1914ee18a0",
+      "0275e022cb64dff870b9df068c3d928cd011655665e15432895158e064f44e9be5",
+      "0298ff2c553a553f78042709658ca720eab8a48f902aebaae862f398845c15eb34",
+      "03b515281957e6cda1e22489a95bc5d2090d0893c63bb40a438d84db4affc87bac",
+      "03a905fe6b018eead29561567ba76267e22fd3549404091bacd243e74d99b81644",
+      "025e82b0d87946507bcfac71117b756640a136da6685aea4dc6828c6e6ca0d6883",
+      "02d6d2032b4cd0e5b4c87675afb72234ee19ae6840bfc696e56adace062f7dda51"
     ],
     "SeedList": [
-      "node1.camatrix.org:18333",
-      "node2.camatrix.org:18333",
-      "node3.camatrix.org:18333",
-      "node4.camatrix.org:18333",
-      "node5.camatrix.org:18333",
-      "node6.camatrix.org:18333"
+      "node1.camatrix.org:16333",
+      "node2.camatrix.org:16333",
+      "node3.camatrix.org:16333",
+      "node4.camatrix.org:16333",
+      "node5.camatrix.org:16333",
+      "node6.camatrix.org:16333"
     ],
     "SystemFee": {
       "EnrollmentTransaction": 1000,

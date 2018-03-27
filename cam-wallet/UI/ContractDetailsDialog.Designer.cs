@@ -2,7 +2,14 @@
 {
     partial class ContractDetailsDialog
     {
+
+
+
         private System.ComponentModel.IContainer components = null;
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,6 +20,10 @@
         }
 
         #region Windows Form Designer generated code
+
+
+
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContractDetailsDialog));
@@ -24,25 +35,49 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
+
+
+
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+
+
+
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
+
+
+
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
+
+
+
             resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.button1, "button1");
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+
+
+
             this.AcceptButton = this.button1;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

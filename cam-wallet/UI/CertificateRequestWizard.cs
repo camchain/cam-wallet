@@ -42,7 +42,13 @@ namespace Cam.UI
             CX509CertificateRequestPkcs10 request = new CX509CertificateRequestPkcs10();
             request.InitializeFromPrivateKey(X509CertificateEnrollmentContext.ContextUser, x509key, null);
             request.Subject = new CX500DistinguishedName();
-            request.Subject.Encode($"CN={textBox1.Text},C={textBox2.Text},S={textBox3.Text},SERIALNUMBER={textBox4.Text}");
+
+
+
+
+
+            request.Subject.Encode($"CN={textBox1.Text}");
+
             request.Encode();
             File.WriteAllText(saveFileDialog1.FileName, "-----BEGIN NEW CERTIFICATE REQUEST-----\r\n" + request.RawData + "-----END NEW CERTIFICATE REQUEST-----\r\n");
             Close();

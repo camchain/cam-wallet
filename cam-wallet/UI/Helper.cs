@@ -61,10 +61,17 @@ namespace Cam.UI
                 InformationBox.Show(context.ToString(), Strings.IncompletedSignatureMessage, Strings.IncompletedSignatureTitle);
             }
         }
+
+
+
+
+
         public static string ToOpCodeFormat(string hexString)
         {
             StringBuilder sb = new StringBuilder();
+
             int maxCount = 100;
+
             byte[] script = Cam.Helper.HexToBytes(hexString);
             int nextIndex = 0;
             while (nextIndex < script.Length && maxCount > 0)
@@ -81,10 +88,18 @@ namespace Cam.UI
 
             return sb.ToString();
         }
+
+
+
+
+
+
+
         private static string PreExecuteOp(VM.OpCode opcode, int index, byte[] script, out int nextIndex)
         {
             
             StringBuilder sb = new StringBuilder();
+
             sb.AppendLine(opcode.ToString());
 
             nextIndex = index + 1;
@@ -94,6 +109,7 @@ namespace Cam.UI
                 int len = (byte)opcode;
 
                 nextIndex = index + len + 1;
+
                 byte[] data = new byte[len];
                 Array.Copy(script, index + 1, data, 0, len);//拷贝的是opcode命令后面的数据
                 sb.AppendLine(Cam.Helper.ToHexString(data));
@@ -102,13 +118,18 @@ namespace Cam.UI
             {
                 switch (opcode)
                 {
+
                     case VM.OpCode.PUSH0:
+
                         break;
                     case VM.OpCode.PUSHDATA1:
+
                         break;
                     case VM.OpCode.PUSHDATA2:
+
                         break;
                     case VM.OpCode.PUSHDATA4:
+
                         break;
                     case VM.OpCode.PUSHM1:
                     case VM.OpCode.PUSH1:
@@ -127,279 +148,735 @@ namespace Cam.UI
                     case VM.OpCode.PUSH14:
                     case VM.OpCode.PUSH15:
                     case VM.OpCode.PUSH16:
+
                         break;
+
                     case VM.OpCode.NOP:
                         break;
                     case VM.OpCode.JMP:
                     case VM.OpCode.JMPIF:
                     case VM.OpCode.JMPIFNOT:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.CALL:
+
+
+
                         break;
                     case VM.OpCode.RET:
+
+
+
                         break;
                     case VM.OpCode.APPCALL:
                     case VM.OpCode.TAILCALL:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.SYSCALL:
+
+
                         break;
+
                     case VM.OpCode.DUPFROMALTSTACK:
+
                         break;
                     case VM.OpCode.TOALTSTACK:
+
                         break;
                     case VM.OpCode.FROMALTSTACK:
+
                         break;
                     case VM.OpCode.XDROP:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.XSWAP:
                         {
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.XTUCK:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.DEPTH:
+
                         break;
                     case VM.OpCode.DROP:
+
                         break;
                     case VM.OpCode.DUP:
+
                         break;
                     case VM.OpCode.NIP:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.OVER:
                         {
+
+
+
+
                         }
                         break;
                     case VM.OpCode.PICK:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.ROLL:
                         {
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.ROT:
                         {
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.SWAP:
                         {
+
+
+
+
                         }
                         break;
                     case VM.OpCode.TUCK:
                         {
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.CAT:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.SUBSTR:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.LEFT:
                         {
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.RIGHT:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.SIZE:
                         {
+
+
                         }
                         break;
+
                     case VM.OpCode.INVERT:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.AND:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.OR:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.XOR:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.EQUAL:
                         {
+
+
+
                         }
                         break;
+
                     case VM.OpCode.INC:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.DEC:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.SIGN:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.NEGATE:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.ABS:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.NOT:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.NZ:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.ADD:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.SUB:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.MUL:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.DIV:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.MOD:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.SHL:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.SHR:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.BOOLAND:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.BOOLOR:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.NUMEQUAL:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.NUMNOTEQUAL:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.LT:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.GT:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.LTE:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.GTE:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.MIN:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.MAX:
                         {
+
+
+
                         }
                         break;
                     case VM.OpCode.WITHIN:
                         {
+
+
+
+
                         }
                         break;
+
                     case VM.OpCode.SHA1:
+
+
+
+
+
                         break;
                     case VM.OpCode.SHA256:
+
+
+
+
+
                         break;
                     case VM.OpCode.HASH160:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.HASH256:
                         {
+
+
                         }
                         break;
                     case VM.OpCode.CHECKSIG:
                         {
+
+
+
+
+
+
+
+
+
+
+
                             sb.AppendLine("single signature contract");
                         }
                         break;
                     case VM.OpCode.CHECKMULTISIG:
                         {
+
                             sb.AppendLine("multi signature contract");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
+
                     case VM.OpCode.ARRAYSIZE:
                         {
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.PACK:
                         {
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.UNPACK:
                         {
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.PICKITEM:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.SETITEM:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.NEWARRAY:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.NEWSTRUCT:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.APPEND:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                         break;
 
                     case VM.OpCode.REVERSE:
                         {
+
+
+
+
+
+
+
                         }
                         break;
                     case VM.OpCode.LOCK:
                         {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             byte[] timestampByteAr = new byte[4];
                             Array.Copy(script, index - 4, timestampByteAr, 0, 4);
                             BigInteger timestamp = new BigInteger(timestampByteAr);
@@ -409,12 +886,20 @@ namespace Cam.UI
 
                         }
                         break;
+
                     case VM.OpCode.THROW:
+
                         break;
                     case VM.OpCode.THROWIFNOT:
+
+
+
+
+
                         break;
 
                     default:
+
                         break;
                 }
             }

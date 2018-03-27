@@ -2,7 +2,14 @@
 {
     partial class IssueDialog
     {
+
+
+
         private System.ComponentModel.IContainer components = null;
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,6 +20,10 @@
         }
 
         #region Windows Form Designer generated code
+
+
+
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IssueDialog));
@@ -35,33 +46,66 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
+
+
+
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
+
+
+
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+
+
+
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.textBox3, "textBox3");
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
+
+
+
             resources.ApplyResources(this.textBox4, "textBox4");
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
+
+
+
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
+
+
+
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+
+
+
             resources.ApplyResources(this.textBox5, "textBox5");
             this.textBox5.Name = "textBox5";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+
+
+
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label2);
@@ -73,24 +117,39 @@
             this.groupBox2.Controls.Add(this.textBox4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+
+
+
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.txOutListBox1);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+
+
+
             resources.ApplyResources(this.txOutListBox1, "txOutListBox1");
             this.txOutListBox1.Asset = null;
             this.txOutListBox1.Name = "txOutListBox1";
             this.txOutListBox1.ReadOnly = false;
             this.txOutListBox1.ScriptHash = null;
             this.txOutListBox1.ItemsChanged += new System.EventHandler(this.txOutListBox1_ItemsChanged);
+
+
+
             resources.ApplyResources(this.button3, "button3");
             this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.button4, "button4");
             this.button4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button4.Name = "button4";
             this.button4.UseVisualStyleBackColor = true;
+
+
+
             this.AcceptButton = this.button3;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

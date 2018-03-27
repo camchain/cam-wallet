@@ -22,6 +22,8 @@ namespace Cam.UI
             {
                 sb.EmitPush(GetKey().PublicKey);
                 sb.EmitPush(timestamp);
+
+
                 sb.Emit(OpCode.LOCK);
                 return Contract.Create(new[] { ContractParameterType.Signature }, sb.ToArray());
             }

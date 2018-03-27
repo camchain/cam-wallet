@@ -5,14 +5,13 @@
       "CertCache": "Certs"
     },
     "P2P": {
-      "Port": 18333,
-      "WsPort": 18334
+      "Port": 16333,
+      "WsPort": 16334
     },
     "Urls": {
-      "AddressUrl": "http://testnet.camchain.xyz:8090/address/{0}",
-      "AssetUrl": "http://testnet.camchain.xyz:8090/asset/hash/{0}",
-      "TransactionUrl": "http://testnet.camchain.xyz:8090/tx/hash/{0}"
+      "AddressUrl": "http://testnet.camchain.xyz/address/{0}",
+      "AssetUrl": "http://testnet.camchain.xyz/asset/hash/{0}",
+      "TransactionUrl": "http://testnet.camchain.xyz/tx/hash/{0}"
     }
   }
 }
-

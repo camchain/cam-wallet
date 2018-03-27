@@ -134,6 +134,9 @@ namespace Cam.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+
+
             if(groupBox1.Visible)
             {
                 groupBox1.Visible = false;

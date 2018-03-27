@@ -2,7 +2,14 @@
 {
     partial class TransferDialog
     {
+
+
+
         private System.ComponentModel.IContainer components = null;
+
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,6 +20,10 @@
         }
 
         #region Windows Form Designer generated code
+
+
+
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransferDialog));
@@ -32,39 +43,63 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+
+
+
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button4);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
+
+
+
             resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+
+
+
             resources.ApplyResources(this.button3, "button3");
             this.button3.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
+
+
+
             resources.ApplyResources(this.button4, "button4");
             this.button4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button4.Name = "button4";
             this.button4.UseVisualStyleBackColor = true;
+
+
+
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.txOutListBox1);
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+
+
+
             resources.ApplyResources(this.button1, "button1");
             this.button1.Image = global::Cam.Properties.Resources.remark;
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+
+
+
             resources.ApplyResources(this.txOutListBox1, "txOutListBox1");
             this.txOutListBox1.Asset = null;
             this.txOutListBox1.Name = "txOutListBox1";
             this.txOutListBox1.ReadOnly = false;
             this.txOutListBox1.ScriptHash = null;
             this.txOutListBox1.ItemsChanged += new System.EventHandler(this.txOutListBox1_ItemsChanged);
+
+
+
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
@@ -72,15 +107,30 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+
+
+
             resources.ApplyResources(this.comboBox1, "comboBox1");
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Name = "comboBox1";
+
+
+
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
+
+
+
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
+
+
+
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+
+
+
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);

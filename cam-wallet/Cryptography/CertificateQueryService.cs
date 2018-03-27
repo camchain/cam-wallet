@@ -78,7 +78,7 @@ namespace Cam.Cryptography
             return results[hash];
         }
 
-        private static void UpdateResultFromFile(UInt160 hash)
+        public static void UpdateResultFromFile(UInt160 hash)
         {
             string address = Wallet.ToAddress(hash);
             X509Certificate2 cert;
