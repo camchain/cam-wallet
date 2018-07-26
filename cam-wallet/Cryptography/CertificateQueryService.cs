@@ -56,25 +56,29 @@ namespace Cam.Cryptography
         {
             lock (results)
             {
-                if (results.ContainsKey(hash)) return results[hash];
+                if (results.ContainsKey(hash))
+                {
+                    return results[hash];
+                }
                 results[hash] = new CertificateQueryResult { Type = CertificateQueryResultType.Querying };
             }
             string address = Wallet.ToAddress(hash);
             string path = Path.Combine(Settings.Default.Paths.CertCache, $"{address}.cer");
-            if (File.Exists(path))
-            {
-                lock (results)
-                {
-                    UpdateResultFromFile(hash);
-                }
-            }
-            else
-            {
-                string url = $"http://cert.camatrix.com/{address}.cer";
+            //if (File.Exists(path))
+            //{
+            //    lock (results)
+            //    {
+            //        UpdateResultFromFile(hash);
+            //    }
+            //}
+            //else
+            //{
+            //每次登陆，都需要刷新服务器的证书
+                string url = $"http://cert.camchain.org/{address}.cer";
                 WebClient web = new WebClient();
                 web.DownloadDataCompleted += Web_DownloadDataCompleted;
                 web.DownloadDataAsync(new Uri(url), hash);
-            }
+            //}
             return results[hash];
         }
 
@@ -104,7 +108,12 @@ namespace Cam.Cryptography
             using (X509Chain chain = new X509Chain())
             {
                 results[hash].Certificate = cert;
-                if (chain.Build(cert))
+                results[hash].subject = GetSubjectCN( cert.Subject);
+
+                X509Certificate2 tempCert = new X509Certificate2(Path.Combine(Settings.Default.Paths.CertCache, $"{address}.cer"));
+
+                chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+                if (chain.Build(tempCert))
                 {
                     results[hash].Type = CertificateQueryResultType.Good;
                 }
@@ -117,6 +126,19 @@ namespace Cam.Cryptography
                     results[hash].Type = CertificateQueryResultType.Invalid;
                 }
             }
+        }
+
+        public static string GetSubjectCN(string subject)
+        {
+            string cn = subject;
+
+            int index = subject.IndexOf(",");
+            if(index > 1)
+            {
+                cn = subject.Substring(3, index-3);                
+            }
+
+            return cn;
         }
     }
 }

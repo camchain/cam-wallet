@@ -7,6 +7,7 @@ namespace Cam.Cryptography
     {
         public CertificateQueryResultType Type;
         public X509Certificate2 Certificate;
+        public string subject;
 
         public void Dispose()
         {
