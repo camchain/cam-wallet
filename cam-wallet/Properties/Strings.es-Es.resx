@@ -218,7 +218,7 @@ Aviso: los ficheros actualizados no podran ser abiertos por clientes de versione
     <value>Debes introducir el objeto JSON de los datos pendientes de firmar.</value>
   </data>
   <data name="SystemIssuer" xml:space="preserve">
-    <value>System</value>
+    <value>CAM Chain</value>
   </data>
   <data name="TradeFailedFakeDataMessage" xml:space="preserve">
     <value>¡Falló la validación! El contratante falsificó el contenido de la transacción.</value>

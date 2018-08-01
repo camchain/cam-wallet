@@ -227,7 +227,7 @@ Note: updated files cannot be openned by clients in older versions!</value>
     <value>You must input JSON object pending signature data.</value>
   </data>
   <data name="SystemIssuer" xml:space="preserve">
-    <value>System</value>
+    <value>CAM Chain</value>
   </data>
   <data name="TradeFailedFakeDataMessage" xml:space="preserve">
     <value>Validation failed, the counterparty falsified the transaction content!</value>
