@@ -41,15 +41,14 @@ namespace Cam.UI
             Array.Clear(prikey, 0, prikey.Length);
             CX509CertificateRequestPkcs10 request = new CX509CertificateRequestPkcs10();
             request.InitializeFromPrivateKey(X509CertificateEnrollmentContext.ContextUser, x509key, null);
-            request.Subject = new CX500DistinguishedName();
-
-
-
-
-
-            request.Subject.Encode($"CN={textBox1.Text}");
+            
+            request.Subject = new CX500DistinguishedName();                       
+            //使用换行进行分隔，可兼容特殊字符
+            request.Subject.Encode(string.Format("CN={0}\r\nC={1}\r\nS={2}\r\nO={3}",textBox1.Text,textBox2.Text,textBox3.Text, "Cayman Islands CAM Digital Asset Management Co.,Ltd."),
+                X500NameFlags.XCN_CERT_NAME_STR_CRLF_FLAG);
 
             request.Encode();
+
             File.WriteAllText(saveFileDialog1.FileName, "-----BEGIN NEW CERTIFICATE REQUEST-----\r\n" + request.RawData + "-----END NEW CERTIFICATE REQUEST-----\r\n");
             Close();
         }
