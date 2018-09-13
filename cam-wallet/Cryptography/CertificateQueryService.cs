@@ -74,10 +74,10 @@ namespace Cam.Cryptography
             //else
             //{
             //每次登陆，都需要刷新服务器的证书
-                string url = $"http://cert.camchain.org/{address}.cer";
-                WebClient web = new WebClient();
-                web.DownloadDataCompleted += Web_DownloadDataCompleted;
-                web.DownloadDataAsync(new Uri(url), hash);
+            string url = $"http://cert.camchain.org/{address}.cer";
+            WebClient web = new WebClient();
+            web.DownloadDataCompleted += Web_DownloadDataCompleted;
+            web.DownloadDataAsync(new Uri(url), hash);
             //}
             return results[hash];
         }
