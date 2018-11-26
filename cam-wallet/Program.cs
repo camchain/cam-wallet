@@ -78,7 +78,8 @@ namespace Cam
 
         [STAThread]
         public static void Main()
-        {         
+        {
+            uint time = DateTime.Now.AddHours(4).ToTimestamp();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

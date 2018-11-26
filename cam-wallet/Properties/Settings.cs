@@ -66,11 +66,11 @@ namespace Cam.Properties
 
     internal class ContractSettings
     {
-        public UInt160[] NEP5 { get; }
+        public UInt160[] CAC20 { get; }
 
         public ContractSettings(IConfigurationSection section)
         {
-            this.NEP5 = section.GetSection("NEP5").GetChildren().Select(p => UInt160.Parse(p.Value)).ToArray();
+            this.CAC20 = section.GetSection("CAC20").GetChildren().Select(p => UInt160.Parse(p.Value)).ToArray();
         }
     }
 }
