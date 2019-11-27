@@ -1,14 +1,23 @@
 ﻿{
   "ProtocolConfiguration": {
-    "Magic": 27788,
+    "Magic": 2668,
     "AddressVersion": 23,
-    "SecondsPerBlock": 5,
-    "LowPriorityThreshold": 0.001,
     "StandbyValidators": [
-      "03fd8e82382735950992d887b3546feb31058ddec6497502a0d93ba4b03c5a65c5"
+      "028ccf3bed30de2a08c989e404d193f4132c76451f38bbcaeabcc5e4002fce2648",
+      "028127773489a374ac27abfd2f05f8256efc1da1c8965e7f6a6f973a901a991315",
+      "03df219143e32dfe7370b0d9574c4d5fe4336454b37bf28bfcef4e4cb4166f06a5",
+      "0315f92379e50165a15259ce5bf2581daa700765f37b2fc9e0bf86d5db56402409",
+      "0381b8d28ab293d1416cfe0fc956273d346d13b439d562160e89fa39dff4a2fe09",
+      "038461a0123eb1ccf7514c676fdd1052d1995eaa5d055316239436c0dfd74ac290",
+      "024e98af5f83e2e3ace03362d4797be8e61a49872d8a4aec2f4394fbdb98429d1d"
     ],
     "SeedList": [
-      "127.0.0.1:10333"
+      "node1.camatrix.org:18333",
+      "node2.camatrix.org:18333",
+      "node3.camatrix.org:18333",
+      "node4.camatrix.org:18333",
+      "node5.camatrix.org:18333",
+      "node6.camatrix.org:18333"
     ],
     "SystemFee": {
       "EnrollmentTransaction": 1000,

@@ -6,13 +6,13 @@
       "CertCache": "Certs"
     },
     "P2P": {
-      "Port": 20333,
-      "WsPort": 20334
+      "Port": 16333,
+      "WsPort": 16334
     },
     "Urls": {
-      "AddressUrl": "https://camscan-testnet.io/address/{0}",
-      "AssetUrl": "https://camscan-testnet.io/api/test_net/v1/get_asset/{0}",
-      "TransactionUrl": "https://camscan-testnet.io/transaction/{0}"
+      "AddressUrl": "http://testnet.camchain.xyz/address/{0}",
+      "AssetUrl": "http://testnet.camchain.xyz/asset/hash/{0}",
+      "TransactionUrl": "http://testnet.camchain.xyz/tx/hash/{0}"
     }
   }
 }
