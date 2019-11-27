@@ -1,5 +1,7 @@
-﻿using Cam.Core;
-using Cam.VM;
+﻿using Cam.Cryptography.ECC;
+using Cam.IO;
+using Cam.Ledger;
+using Cam.Network.P2P.Payloads;
 using Cam.Wallets;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,38 +12,30 @@ namespace Cam.UI
     {
         private UInt160 script_hash;
 
-        public InvocationTransaction GetTransaction()
+        public StateTransaction GetTransaction()
         {
-            using (ScriptBuilder sb = new ScriptBuilder())
+            return Program.CurrentWallet.MakeTransaction(new StateTransaction
             {
-                foreach (string line in textBox1.Lines.Reverse())
-                    sb.EmitPush(line.HexToBytes());
-                sb.EmitPush(textBox1.Lines.Length);
-                sb.Emit(OpCode.PACK);
-                sb.EmitPush(script_hash);
-                sb.EmitSysCall("Cam.Blockchain.GetAccount");
-                sb.EmitSysCall("Cam.Account.SetVotes");
-                return new InvocationTransaction
+                Version = 0,
+                Descriptors = new[]
                 {
-                    Script = sb.ToArray(),
-                    Attributes = new[]
+                    new StateDescriptor
                     {
-                        new TransactionAttribute
-                        {
-                            Usage = TransactionAttributeUsage.Script,
-                            Data = script_hash.ToArray()
-                        }
+                        Type = StateType.Account,
+                        Key = script_hash.ToArray(),
+                        Field = "Votes",
+                        Value = textBox1.Lines.Select(p => ECPoint.Parse(p, ECCurve.Secp256r1)).ToArray().ToByteArray()
                     }
-                };
-            }
+                }
+            });
         }
 
         public VotingDialog(UInt160 script_hash)
         {
             InitializeComponent();
             this.script_hash = script_hash;
-            AccountState account = Blockchain.Default.GetAccountState(script_hash);
-            label1.Text = Wallet.ToAddress(script_hash);
+            AccountState account = Blockchain.Singleton.Store.GetAccounts().TryGet(script_hash);
+            label1.Text = script_hash.ToAddress();
             textBox1.Lines = account.Votes.Select(p => p.ToString()).ToArray();
         }
     }

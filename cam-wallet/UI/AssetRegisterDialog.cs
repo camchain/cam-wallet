@@ -1,5 +1,5 @@
-﻿using Cam.Core;
-using Cam.Cryptography.ECC;
+﻿using Cam.Cryptography.ECC;
+using Cam.Network.P2P.Payloads;
 using Cam.SmartContract;
 using Cam.VM;
 using Cam.Wallets;
@@ -24,8 +24,8 @@ namespace Cam.UI
             Fixed8 amount = checkBox1.Checked ? Fixed8.Parse(textBox2.Text) : -Fixed8.Satoshi;
             byte precision = (byte)numericUpDown1.Value;
             ECPoint owner = (ECPoint)comboBox2.SelectedItem;
-            UInt160 admin = Wallet.ToScriptHash(comboBox3.Text);
-            UInt160 issuer = Wallet.ToScriptHash(comboBox4.Text);
+            UInt160 admin = comboBox3.Text.ToScriptHash();
+            UInt160 issuer = comboBox4.Text.ToScriptHash();
             using (ScriptBuilder sb = new ScriptBuilder())
             {
                 sb.EmitSysCall("Cam.Asset.Create", asset_type, name, amount, precision, owner, admin, issuer);
@@ -47,14 +47,15 @@ namespace Cam.UI
         private void AssetRegisterDialog_Load(object sender, EventArgs e)
         {
             comboBox1.Items.AddRange(new object[] { AssetType.Share, AssetType.Token });
-            comboBox2.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.IsStandard).Select(p => p.GetKey().PublicKey).ToArray());
+            comboBox2.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.Script.IsSignatureContract()).Select(p => p.GetKey().PublicKey).ToArray());
             comboBox3.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly).Select(p => p.Address).ToArray());
             comboBox4.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly).Select(p => p.Address).ToArray());
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            numericUpDown1.Enabled = (AssetType)comboBox1.SelectedItem != AssetType.Share;
+            if (!(comboBox1.SelectedItem is AssetType assetType)) return;
+            numericUpDown1.Enabled = assetType != AssetType.Share;
             if (!numericUpDown1.Enabled) numericUpDown1.Value = 0;
             CheckForm(sender, e);
         }
@@ -77,8 +78,8 @@ namespace Cam.UI
             {
                 try
                 {
-                    Wallet.ToScriptHash(comboBox3.Text);
-                    Wallet.ToScriptHash(comboBox4.Text);
+                    comboBox3.Text.ToScriptHash();
+                    comboBox4.Text.ToScriptHash();
                 }
                 catch (FormatException)
                 {

@@ -132,8 +132,20 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ChangePasswordSuccessful" xml:space="preserve">
     <value>Change password successful.</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="CostTips" xml:space="preserve">
+    <value>will be consumed, confirm?</value>
+  </data>
+  <data name="CostTitle" xml:space="preserve">
+    <value>Cost Warning</value>
   </data>
   <data name="DeleteAddressConfirmationCaption" xml:space="preserve">
     <value>Confirmation</value>
@@ -162,6 +174,9 @@
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
+  <data name="HighPriority" xml:space="preserve">
+    <value>High Priority Transaction</value>
+  </data>
   <data name="ImportWatchOnlyAddress" xml:space="preserve">
     <value>Import Watch-Only Address</value>
   </data>
@@ -178,19 +193,13 @@
     <value>Install the certificate</value>
   </data>
   <data name="InstallCertificateText" xml:space="preserve">
-    <value>CAM must install root certificate to validate assets on the blockchain, install it now?</value>
+    <value>CAM must install Camchain root certificate to validate assets on the blockchain, install it now?</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
     <value>Insufficient funds, transaction cannot be initiated.</value>
   </data>
   <data name="InvalidCertificate" xml:space="preserve">
     <value>Invalid</value>
-  </data>
-  <data name="IsExitProgram" xml:space="preserve">
-    <value>Are you sure you want to quit?</value>
-  </data>
-  <data name="IsExitPrompt" xml:space="preserve">
-    <value>Prompt</value>
   </data>
   <data name="MigrateWalletCaption" xml:space="preserve">
     <value>Migrate Wallet</value>
@@ -227,7 +236,7 @@ Note: updated files cannot be openned by clients in older versions!</value>
     <value>You must input JSON object pending signature data.</value>
   </data>
   <data name="SystemIssuer" xml:space="preserve">
-    <value>CAM Chain</value>
+    <value>System</value>
   </data>
   <data name="TradeFailedFakeDataMessage" xml:space="preserve">
     <value>Validation failed, the counterparty falsified the transaction content!</value>
@@ -264,14 +273,5 @@ Note: updated files cannot be openned by clients in older versions!</value>
   </data>
   <data name="UnsynchronizedBlock" xml:space="preserve">
     <value>Blockchain unsynchronized, transaction cannot be sent.</value>
-  </data>
-  <data name="VerifyContractFail" xml:space="preserve">
-    <value>Validation failed, address error</value>
-  </data>
-  <data name="VerifyContractFail2" xml:space="preserve">
-    <value>Validation failed, contract error</value>
-  </data>
-  <data name="VerifyContractSuccess" xml:space="preserve">
-    <value>Validation is successful</value>
   </data>
 </root>

@@ -178,7 +178,7 @@
     <value>Instalar certificado</value>
   </data>
   <data name="InstallCertificateText" xml:space="preserve">
-    <value>CAM debe instalar el certificado raíz de  para validar activos en la blockchain. ¿Instalar ahora?</value>
+    <value>CAM debe instalar el certificado raíz de Camchain para validar activos en la blockchain. ¿Instalar ahora?</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
     <value>Fondos insuficientes, la transacción no se puede iniciar.</value>
@@ -218,7 +218,7 @@ Aviso: los ficheros actualizados no podran ser abiertos por clientes de versione
     <value>Debes introducir el objeto JSON de los datos pendientes de firmar.</value>
   </data>
   <data name="SystemIssuer" xml:space="preserve">
-    <value>CAM Chain</value>
+    <value>System</value>
   </data>
   <data name="TradeFailedFakeDataMessage" xml:space="preserve">
     <value>¡Falló la validación! El contratante falsificó el contenido de la transacción.</value>

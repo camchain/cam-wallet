@@ -117,56 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>36, 15</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 17</value>
-  </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 12</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 44</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 17</value>
-  </data>
-  <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 41</value>
-  </data>
-  <data name="textBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 17</value>
-  </data>
-  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>77, 70</value>
-  </data>
-  <data name="textBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>验证合约</value>
-  </data>
-  <data name="btnVerify.Text" xml:space="preserve">
-    <value>验证</value>
-  </data>
   <data name="button1.Text" xml:space="preserve">
-    <value>关闭</value>
+    <value>签名</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>合约脚本</value>
+    <value>输入</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>地址:</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>输出</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>验证地址:</value>
+  <data name="button2.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="button3.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="button4.Text" xml:space="preserve">
+    <value>广播</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>签名</value>
   </data>
 </root>

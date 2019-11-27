@@ -15,6 +15,7 @@ namespace Cam.UI
             {
                 textBox1.Text = Settings.Default.LastWalletPath;
 
+                // focus in password input if wallet has been set
                 this.ActiveControl = textBox2;
             }
         }

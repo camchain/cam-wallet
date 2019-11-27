@@ -1,4 +1,5 @@
-﻿using Cam.Core;
+﻿using Cam.Ledger;
+using Cam.Network.P2P.Payloads;
 using Cam.Wallets;
 using System;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Cam.UI
             AssetState state;
             if (UInt256.TryParse(textBox5.Text, out UInt256 asset_id))
             {
-                state = Blockchain.Default.GetAssetState(asset_id);
+                state = Blockchain.Singleton.Store.GetAssets().TryGet(asset_id);
                 txOutListBox1.Asset = new AssetDescriptor(asset_id);
             }
             else
@@ -57,7 +58,7 @@ namespace Cam.UI
             else
             {
                 textBox1.Text = state.Owner.ToString();
-                textBox2.Text = Wallet.ToAddress(state.Admin);
+                textBox2.Text = state.Admin.ToAddress();
                 textBox3.Text = state.Amount == -Fixed8.Satoshi ? "+\u221e" : state.Amount.ToString();
                 textBox4.Text = state.Available.ToString();
                 groupBox3.Enabled = true;

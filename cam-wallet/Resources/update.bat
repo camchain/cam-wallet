@@ -1,5 +1,5 @@
 @echo off
-set "taskname=cam-wallet.exe"
+set "taskname=cam-gui.exe"
 echo waiting...
 :wait
 ping 127.0.1 -n 3 >nul

@@ -1,4 +1,6 @@
-﻿using Cam.Core;
+﻿using Cam.IO.Caching;
+using Cam.Ledger;
+using Cam.Network.P2P.Payloads;
 using Cam.Wallets;
 using System;
 using System.Collections.Generic;
@@ -63,9 +65,10 @@ namespace Cam.UI
         public void SetItems(IEnumerable<TransactionOutput> outputs)
         {
             listBox1.Items.Clear();
+            DataCache<UInt256, AssetState> cache = Blockchain.Singleton.Store.GetAssets();
             foreach (TransactionOutput output in outputs)
             {
-                AssetState asset = Blockchain.Default.GetAssetState(output.AssetId);
+                AssetState asset = cache.TryGet(output.AssetId);
                 listBox1.Items.Add(new TxOutListBoxItem
                 {
                     AssetName = $"{asset.GetName()} ({asset.Owner})",

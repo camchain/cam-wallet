@@ -13,15 +13,6 @@ namespace Cam.UI
             textBox2.Text = contract.ScriptHash.ToString();
             textBox3.Text = contract.ParameterList.Cast<byte>().ToArray().ToHexString();
             textBox4.Text = contract.Script.ToHexString();
-
-            string hexString = contract.Script.ToHexString();
-
-            string opMsg = Helper.ToOpCodeFormat(hexString);
-
-            textBox5.Text = opMsg;
-
         }
-
-
     }
 }

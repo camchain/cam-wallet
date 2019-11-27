@@ -1,4 +1,4 @@
-﻿using Cam.Core;
+﻿using Cam.Network.P2P.Payloads;
 using System.Collections.Generic;
 using System.Linq;
 

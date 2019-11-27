@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cam-wallet", "cam-wallet\cam-wallet.csproj", "{CFC243F0-F4E3-4754-8E21-8BA17E1C1788}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4B44A055-A525-4739-BDFC-0782D3FD6A5D}
+		SolutionGuid = {0177D1CB-BDC8-4FB6-84EC-4E26F47C7BF3}
 	EndGlobalSection
 EndGlobal

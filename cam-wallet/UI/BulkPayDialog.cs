@@ -48,22 +48,21 @@ namespace Cam.UI
                 {
                     AssetName = asset.AssetName,
                     AssetId = asset.AssetId,
-                    Value = new BigDecimal(Fixed8.Parse(line[1]).GetData(), 8),
-                    ScriptHash = Wallet.ToScriptHash(line[0])
+                    Value = BigDecimal.Parse(line[1], asset.Decimals),
+                    ScriptHash = line[0].ToScriptHash()
                 };
             }).Where(p => p.Value.Value != 0).ToArray();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AssetDescriptor asset = comboBox1.SelectedItem as AssetDescriptor;
-            if (asset == null)
+            if (comboBox1.SelectedItem is AssetDescriptor asset)
             {
-                textBox3.Text = "";
+                textBox3.Text = Program.CurrentWallet.GetAvailable(asset.AssetId).ToString();
             }
             else
             {
-                textBox3.Text = Program.CurrentWallet.GetAvailable(asset.AssetId).ToString();
+                textBox3.Text = "";
             }
             textBox1_TextChanged(this, EventArgs.Empty);
         }

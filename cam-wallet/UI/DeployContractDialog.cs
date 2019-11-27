@@ -1,4 +1,5 @@
-﻿using Cam.Core;
+﻿using Cam.Ledger;
+using Cam.Network.P2P.Payloads;
 using Cam.SmartContract;
 using Cam.VM;
 using System;
@@ -20,7 +21,10 @@ namespace Cam.UI
             byte[] script = textBox8.Text.HexToBytes();
             byte[] parameter_list = textBox6.Text.HexToBytes();
             ContractParameterType return_type = textBox7.Text.HexToBytes().Select(p => (ContractParameterType?)p).FirstOrDefault() ?? ContractParameterType.Void;
-            bool need_storage = checkBox1.Checked;
+            ContractPropertyState properties = ContractPropertyState.NoProperty;
+            if (checkBox1.Checked) properties |= ContractPropertyState.HasStorage;
+            if (checkBox2.Checked) properties |= ContractPropertyState.HasDynamicInvoke;
+            if (checkBox3.Checked) properties |= ContractPropertyState.Payable;
             string name = textBox1.Text;
             string version = textBox2.Text;
             string author = textBox3.Text;
@@ -28,7 +32,7 @@ namespace Cam.UI
             string description = textBox5.Text;
             using (ScriptBuilder sb = new ScriptBuilder())
             {
-                sb.EmitSysCall("Cam.Contract.Create", script, parameter_list, return_type, need_storage, name, version, author, email, description);
+                sb.EmitSysCall("Cam.Contract.Create", script, parameter_list, return_type, properties, name, version, author, email, description);
                 return new InvocationTransaction
                 {
                     Script = sb.ToArray()

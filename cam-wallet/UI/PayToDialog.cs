@@ -38,7 +38,7 @@ namespace Cam.UI
             }
             if (scriptHash != null)
             {
-                textBox1.Text = Wallet.ToAddress(scriptHash);
+                textBox1.Text = scriptHash.ToAddress();
                 textBox1.ReadOnly = true;
             }
         }
@@ -50,21 +50,20 @@ namespace Cam.UI
             {
                 AssetName = asset.AssetName,
                 AssetId = asset.AssetId,
-                Value = new BigDecimal(Fixed8.Parse(textBox2.Text).GetData(), 8),
-                ScriptHash = Wallet.ToScriptHash(textBox1.Text)
+                Value = BigDecimal.Parse(textBox2.Text, asset.Decimals),
+                ScriptHash = textBox1.Text.ToScriptHash()
             };
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AssetDescriptor asset = comboBox1.SelectedItem as AssetDescriptor;
-            if (asset == null)
+            if (comboBox1.SelectedItem is AssetDescriptor asset)
             {
-                textBox3.Text = "";
+                textBox3.Text = Program.CurrentWallet.GetAvailable(asset.AssetId).ToString();
             }
             else
             {
-                textBox3.Text = Program.CurrentWallet.GetAvailable(asset.AssetId).ToString();
+                textBox3.Text = "";
             }
             textBox_TextChanged(this, EventArgs.Empty);
         }
@@ -78,24 +77,20 @@ namespace Cam.UI
             }
             try
             {
-                Wallet.ToScriptHash(textBox1.Text);
+                textBox1.Text.ToScriptHash();
             }
             catch (FormatException)
             {
                 button1.Enabled = false;
                 return;
             }
-            if (!Fixed8.TryParse(textBox2.Text, out Fixed8 amount))
+            AssetDescriptor asset = (AssetDescriptor)comboBox1.SelectedItem;
+            if (!BigDecimal.TryParse(textBox2.Text, asset.Decimals, out BigDecimal amount))
             {
                 button1.Enabled = false;
                 return;
             }
-            if (amount == Fixed8.Zero)
-            {
-                button1.Enabled = false;
-                return;
-            }
-            if (amount.GetData() % (long)Math.Pow(10, 8 - (comboBox1.SelectedItem as AssetDescriptor).Decimals) != 0)
+            if (amount.Sign <= 0)
             {
                 button1.Enabled = false;
                 return;

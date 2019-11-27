@@ -2,14 +2,15 @@
 {
     partial class ParametersEditor
     {
-
-
-
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-
-
-
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,9 +22,10 @@
 
         #region Windows Form Designer generated code
 
-
-
-
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParametersEditor));
@@ -46,16 +48,16 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-
-
-
+            // 
+            // groupBox1
+            // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.listView1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-
-
-
+            // 
+            // listView1
+            // 
             resources.ApplyResources(this.listView1, "listView1");
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -70,55 +72,55 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-
-
-
+            // 
+            // columnHeader1
+            // 
             resources.ApplyResources(this.columnHeader1, "columnHeader1");
-
-
-
+            // 
+            // columnHeader2
+            // 
             resources.ApplyResources(this.columnHeader2, "columnHeader2");
-
-
-
+            // 
+            // columnHeader3
+            // 
             resources.ApplyResources(this.columnHeader3, "columnHeader3");
-
-
-
+            // 
+            // panel1
+            // 
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Name = "panel1";
-
-
-
+            // 
+            // button4
+            // 
             resources.ApplyResources(this.button4, "button4");
             this.button4.Name = "button4";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-
-
-
+            // 
+            // button3
+            // 
             resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-
-
-
+            // 
+            // groupBox2
+            // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-
-
-
+            // 
+            // textBox1
+            // 
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-
-
-
+            // 
+            // groupBox3
+            // 
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.panel1);
             this.groupBox3.Controls.Add(this.button2);
@@ -126,29 +128,29 @@
             this.groupBox3.Controls.Add(this.textBox2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
-
-
-
+            // 
+            // button2
+            // 
             resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-
-
-
+            // 
+            // button1
+            // 
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-
-
-
+            // 
+            // textBox2
+            // 
             resources.ApplyResources(this.textBox2, "textBox2");
             this.textBox2.Name = "textBox2";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-
-
-
+            // 
+            // ParametersEditor
+            // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox3);

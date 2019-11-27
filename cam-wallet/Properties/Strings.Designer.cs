@@ -106,11 +106,47 @@ namespace Cam.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Cancel 的本地化字符串。
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Change password successful. 的本地化字符串。
         /// </summary>
         internal static string ChangePasswordSuccessful {
             get {
                 return ResourceManager.GetString("ChangePasswordSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Confirm 的本地化字符串。
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 will be consumed, confirm? 的本地化字符串。
+        /// </summary>
+        internal static string CostTips {
+            get {
+                return ResourceManager.GetString("CostTips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cost Warning 的本地化字符串。
+        /// </summary>
+        internal static string CostTitle {
+            get {
+                return ResourceManager.GetString("CostTitle", resourceCulture);
             }
         }
         
@@ -196,6 +232,15 @@ namespace Cam.Properties {
         }
         
         /// <summary>
+        ///   查找类似 High Priority Transaction 的本地化字符串。
+        /// </summary>
+        internal static string HighPriority {
+            get {
+                return ResourceManager.GetString("HighPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Import Watch-Only Address 的本地化字符串。
         /// </summary>
         internal static string ImportWatchOnlyAddress {
@@ -241,7 +286,7 @@ namespace Cam.Properties {
         }
         
         /// <summary>
-        ///   查找类似 CAM must install root certificate to validate assets on the blockchain, install it now? 的本地化字符串。
+        ///   查找类似 CAM must install Camchain root certificate to validate assets on the blockchain, install it now? 的本地化字符串。
         /// </summary>
         internal static string InstallCertificateText {
             get {
@@ -264,24 +309,6 @@ namespace Cam.Properties {
         internal static string InvalidCertificate {
             get {
                 return ResourceManager.GetString("InvalidCertificate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Are you sure you want to quit? 的本地化字符串。
-        /// </summary>
-        internal static string IsExitProgram {
-            get {
-                return ResourceManager.GetString("IsExitProgram", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Prompt 的本地化字符串。
-        /// </summary>
-        internal static string IsExitPrompt {
-            get {
-                return ResourceManager.GetString("IsExitPrompt", resourceCulture);
             }
         }
         
@@ -386,7 +413,7 @@ namespace Cam.Properties {
         }
         
         /// <summary>
-        ///   查找类似 CAM Chain 的本地化字符串。
+        ///   查找类似 System 的本地化字符串。
         /// </summary>
         internal static string SystemIssuer {
             get {
@@ -499,33 +526,6 @@ namespace Cam.Properties {
         internal static string UnsynchronizedBlock {
             get {
                 return ResourceManager.GetString("UnsynchronizedBlock", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Validation failed, address error 的本地化字符串。
-        /// </summary>
-        internal static string VerifyContractFail {
-            get {
-                return ResourceManager.GetString("VerifyContractFail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Validation failed, contract error 的本地化字符串。
-        /// </summary>
-        internal static string VerifyContractFail2 {
-            get {
-                return ResourceManager.GetString("VerifyContractFail2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Validation is successful 的本地化字符串。
-        /// </summary>
-        internal static string VerifyContractSuccess {
-            get {
-                return ResourceManager.GetString("VerifyContractSuccess", resourceCulture);
             }
         }
     }

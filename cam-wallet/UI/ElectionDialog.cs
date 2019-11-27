@@ -1,7 +1,7 @@
-﻿using Cam.Core;
-using Cam.Cryptography.ECC;
+﻿using Cam.Cryptography.ECC;
+using Cam.IO;
+using Cam.Network.P2P.Payloads;
 using Cam.SmartContract;
-using Cam.VM;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,35 +15,52 @@ namespace Cam.UI
             InitializeComponent();
         }
 
-        public InvocationTransaction GetTransaction()
+        public StateTransaction GetTransaction()
         {
             ECPoint pubkey = (ECPoint)comboBox1.SelectedItem;
-            using (ScriptBuilder sb = new ScriptBuilder())
+            return Program.CurrentWallet.MakeTransaction(new StateTransaction
             {
-                sb.EmitSysCall("Cam.Validator.Register", pubkey);
-                return new InvocationTransaction
+                Version = 0,
+                Descriptors = new[]
                 {
-                    Attributes = new[]
+                    new StateDescriptor
                     {
-                        new TransactionAttribute
-                        {
-                            Usage = TransactionAttributeUsage.Script,
-                            Data = Contract.CreateSignatureRedeemScript(pubkey).ToScriptHash().ToArray()
-                        }
-                    },
-                    Script = sb.ToArray()
-                };
-            }
+                        Type = StateType.Validator,
+                        Key = pubkey.ToArray(),
+                        Field = "Registered",
+                        Value = BitConverter.GetBytes(true)
+                    }
+                }
+            });
         }
 
         private void ElectionDialog_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.IsStandard).Select(p => p.GetKey().PublicKey).ToArray());
+            comboBox1.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.Script.IsStandardContract()).Select(p => p.GetKey().PublicKey).ToArray());
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            button1.Enabled = comboBox1.SelectedIndex >= 0;
+            if (comboBox1.SelectedIndex >= 0)
+            {
+                button1.Enabled = true;
+                ECPoint pubkey = (ECPoint)comboBox1.SelectedItem;
+                StateTransaction tx = new StateTransaction
+                {
+                    Version = 0,
+                    Descriptors = new[]
+                    {
+                        new StateDescriptor
+                        {
+                            Type = StateType.Validator,
+                            Key = pubkey.ToArray(),
+                            Field = "Registered",
+                            Value = BitConverter.GetBytes(true)
+                        }
+                    }
+                };
+                label3.Text = $"{tx.SystemFee} gas";
+            }
         }
     }
 }

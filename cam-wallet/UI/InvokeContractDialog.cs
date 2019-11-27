@@ -1,5 +1,6 @@
-﻿using Cam.Core;
-using Cam.IO.Json;
+﻿using Cam.IO.Json;
+using Cam.Ledger;
+using Cam.Network.P2P.Payloads;
 using Cam.Properties;
 using Cam.SmartContract;
 using Cam.VM;
@@ -14,8 +15,10 @@ namespace Cam.UI
     internal partial class InvokeContractDialog : Form
     {
         private InvocationTransaction tx;
+        private JObject abi;
         private UInt160 script_hash;
         private ContractParameter[] parameters;
+        private ContractParameter[] parameters_abi;
 
         private static readonly Fixed8 net_fee = Fixed8.FromDecimal(0.001m);
 
@@ -30,31 +33,50 @@ namespace Cam.UI
             }
         }
 
-        public InvocationTransaction GetTransaction()
+        public InvocationTransaction GetTransaction(Fixed8 fee, UInt160 Change_Address = null)
         {
-            Fixed8 fee = tx.Gas.Equals(Fixed8.Zero) ? net_fee : Fixed8.Zero;
-            return Program.CurrentWallet.MakeTransaction(new InvocationTransaction
+            if (tx.Size > 1024)
             {
-                Version = tx.Version,
-                Script = tx.Script,
-                Gas = tx.Gas,
-                Attributes = tx.Attributes,
-                Inputs = tx.Inputs,
-                Outputs = tx.Outputs
-            }, fee: fee);
+                Fixed8 sumFee = Fixed8.FromDecimal(tx.Size * 0.00001m) + Fixed8.FromDecimal(0.001m);
+                if (fee < sumFee)
+                {
+                    fee = sumFee;
+                }
+            }
+
+            if (Helper.CostRemind(tx.Gas.Ceiling(), fee))
+            {
+                InvocationTransaction result = Program.CurrentWallet.MakeTransaction(new InvocationTransaction
+                {
+                    Version = tx.Version,
+                    Script = tx.Script,
+                    Gas = tx.Gas,
+                    Attributes = tx.Attributes,
+                    Outputs = tx.Outputs
+                }, change_address: Change_Address, fee: fee);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public InvocationTransaction GetTransaction(UInt160 change_address, Fixed8 fee)
+        private void UpdateParameters()
         {
-            return Program.CurrentWallet.MakeTransaction(new InvocationTransaction
+            parameters = new[]
             {
-                Version = tx.Version,
-                Script = tx.Script,
-                Gas = tx.Gas,
-                Attributes = tx.Attributes,
-                Inputs = tx.Inputs,
-                Outputs = tx.Outputs
-            }, change_address: change_address,fee : fee);
+                new ContractParameter
+                {
+                    Type = ContractParameterType.String,
+                    Value = comboBox1.SelectedItem
+                },
+                new ContractParameter
+                {
+                    Type = ContractParameterType.Array,
+                    Value = parameters_abi
+                }
+            };
         }
 
         private void UpdateScript()
@@ -75,7 +97,7 @@ namespace Cam.UI
         private void button1_Click(object sender, EventArgs e)
         {
             script_hash = UInt160.Parse(textBox1.Text);
-            ContractState contract = Blockchain.Default.GetContract(script_hash);
+            ContractState contract = Blockchain.Singleton.Store.GetContracts().TryGet(script_hash);
             if (contract == null) return;
             parameters = contract.ParameterList.Select(p => new ContractParameter(p)).ToArray();
             textBox2.Text = contract.Name;
@@ -119,19 +141,19 @@ namespace Cam.UI
             if (tx.Attributes == null) tx.Attributes = new TransactionAttribute[0];
             if (tx.Inputs == null) tx.Inputs = new CoinReference[0];
             if (tx.Outputs == null) tx.Outputs = new TransactionOutput[0];
-            if (tx.Scripts == null) tx.Scripts = new Witness[0];
-            ApplicationEngine engine = ApplicationEngine.Run(tx.Script, tx);
+            if (tx.Witnesses == null) tx.Witnesses = new Witness[0];
+            ApplicationEngine engine = ApplicationEngine.Run(tx.Script, tx, testMode: true);
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"VM State: {engine.State}");
             sb.AppendLine($"Gas Consumed: {engine.GasConsumed}");
-            sb.AppendLine($"Evaluation Stack: {new JArray(engine.EvaluationStack.Select(p => p.ToParameter().ToJson()))}");
+            sb.AppendLine($"Evaluation Stack: {new JArray(engine.ResultStack.Select(p => p.ToParameter().ToJson()))}");
             textBox7.Text = sb.ToString();
             if (!engine.State.HasFlag(VMState.FAULT))
             {
                 tx.Gas = engine.GasConsumed - Fixed8.FromDecimal(10);
                 if (tx.Gas < Fixed8.Zero) tx.Gas = Fixed8.Zero;
                 tx.Gas = tx.Gas.Ceiling();
-                Fixed8 fee = tx.Gas.Equals(Fixed8.Zero) ? net_fee : tx.Gas;
+                Fixed8 fee = tx.Gas;
                 label7.Text = fee + " gas";
                 button3.Enabled = true;
             }
@@ -145,6 +167,41 @@ namespace Cam.UI
         {
             if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
             textBox6.Text = File.ReadAllBytes(openFileDialog1.FileName).ToHexString();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog2.ShowDialog() != DialogResult.OK) return;
+            abi = JObject.Parse(File.ReadAllText(openFileDialog2.FileName));
+            script_hash = UInt160.Parse(abi["hash"].AsString());
+            textBox8.Text = script_hash.ToString();
+            comboBox1.Items.Clear();
+            comboBox1.Items.AddRange(((JArray)abi["functions"]).Select(p => p["name"].AsString()).Where(p => p != abi["entrypoint"].AsString()).ToArray());
+            textBox9.Clear();
+            button8.Enabled = false;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (ParametersEditor dialog = new ParametersEditor(parameters_abi))
+            {
+                dialog.ShowDialog();
+            }
+            UpdateParameters();
+            UpdateScript();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(comboBox1.SelectedItem is string method)) return;
+            JArray functions = (JArray)abi["functions"];
+            JObject function = functions.First(p => p["name"].AsString() == method);
+            JArray _params = (JArray)function["parameters"];
+            parameters_abi = _params.Select(p => new ContractParameter(p["type"].TryGetEnum<ContractParameterType>())).ToArray();
+            textBox9.Text = string.Join(", ", _params.Select(p => p["name"].AsString()));
+            button8.Enabled = parameters_abi.Length > 0;
+            UpdateParameters();
+            UpdateScript();
         }
     }
 }

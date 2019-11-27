@@ -1,17 +1,18 @@
 ﻿{
   "ApplicationConfiguration": {
     "Paths": {
-      "Chain": "Chain",
+      "Chain": "Chain_{0}",
+      "Index": "Index_{0}",
       "CertCache": "Certs"
     },
     "P2P": {
-      "Port": 16333,
-      "WsPort": 16334
+      "Port": 20333,
+      "WsPort": 20334
     },
     "Urls": {
-      "AddressUrl": "http://testnet.camchain.xyz/address/{0}",
-      "AssetUrl": "http://testnet.camchain.xyz/asset/hash/{0}",
-      "TransactionUrl": "http://testnet.camchain.xyz/tx/hash/{0}"
+      "AddressUrl": "https://camscan-testnet.io/address/{0}",
+      "AssetUrl": "https://camscan-testnet.io/api/test_net/v1/get_asset/{0}",
+      "TransactionUrl": "https://camscan-testnet.io/transaction/{0}"
     }
   }
 }

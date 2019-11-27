@@ -187,10 +187,10 @@
   <data name="交易TToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Transacción</value>
   </data>
-  <data name="提取小蚁币CToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="提取GASCToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 22</value>
   </data>
-  <data name="提取GasCToolStripMenuItem.Text" xml:space="preserve">
+  <data name="提取GASCToolStripMenuItem.Text" xml:space="preserve">
     <value>Reclamar &amp;Gas...</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
@@ -794,11 +794,5 @@
         D////8AAAAA/////+AAAAP//////AAAD///////gAA////////wAP////////wD/////////4///////
         //////////////////////////////////////////////////8=
 </value>
-  </data>
-  <data name="gasClaimToolStripMenuItem.Text" xml:space="preserve">
-    <value>Reclamar &amp;Gas...</value>
-  </data>
-  <data name="toolStripStatusLabel5.Text" xml:space="preserve">
-    <value>Wallet Path:</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Cam.Network.P2P;
 using System.Linq;
 
 namespace Cam.Properties
@@ -29,11 +30,13 @@ namespace Cam.Properties
     internal class PathsSettings
     {
         public string Chain { get; }
+        public string Index { get; }
         public string CertCache { get; }
 
         public PathsSettings(IConfigurationSection section)
         {
-            this.Chain = section.GetSection("Chain").Value;
+            this.Chain = string.Format(section.GetSection("Chain").Value, Message.Magic.ToString("X8"));
+            this.Index = string.Format(section.GetSection("Index").Value, Message.Magic.ToString("X8"));
             this.CertCache = section.GetSection("CertCache").Value;
         }
     }
@@ -66,11 +69,11 @@ namespace Cam.Properties
 
     internal class ContractSettings
     {
-        public UInt160[] CAC20 { get; }
+        public UInt160[] NEP5 { get; }
 
         public ContractSettings(IConfigurationSection section)
         {
-            this.CAC20 = section.GetSection("CAC20").GetChildren().Select(p => UInt160.Parse(p.Value)).ToArray();
+            this.NEP5 = section.GetSection("NEP5").GetChildren().Select(p => UInt160.Parse(p.Value)).ToArray();
         }
     }
 }

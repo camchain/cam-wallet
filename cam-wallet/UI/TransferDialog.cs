@@ -1,4 +1,4 @@
-﻿using Cam.Core;
+﻿using Cam.Network.P2P.Payloads;
 using Cam.Properties;
 using Cam.SmartContract;
 using Cam.VM;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Windows.Forms;
+using VMArray = Cam.VM.Types.Array;
 
 namespace Cam.UI
 {
@@ -16,16 +17,17 @@ namespace Cam.UI
     {
         private string remark = "";
 
-        public Fixed8 Fee => Fixed8.Parse(textBox1.Text);
-        public UInt160 ChangeAddress => Wallet.ToScriptHash((string)comboBox1.SelectedItem);
+        public Fixed8 Fee => Fixed8.Parse(textBoxFee.Text);
+        public UInt160 ChangeAddress => ((string)comboBoxChangeAddress.SelectedItem).ToScriptHash();
+        public UInt160 FromAddress;
 
         public TransferDialog()
         {
             InitializeComponent();
-            textBox1.Text = "0";
-            comboBox1.Items.AddRange(Program.CurrentWallet.GetAccounts().Select(p => p.Address).ToArray());
-            comboBox1.SelectedItem = Wallet.ToAddress(Program.CurrentWallet.GetChangeAddress());
-            this.Height = 411;
+            textBoxFee.Text = "0";
+            comboBoxChangeAddress.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly).Select(p => p.Address).ToArray());
+            comboBoxChangeAddress.SelectedItem = Program.CurrentWallet.GetChangeAddress().ToAddress();
+            comboBoxFrom.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly).Select(p => p.Address).ToArray());
         }
 
         public Transaction GetTransaction()
@@ -36,19 +38,37 @@ namespace Cam.UI
                 Account = p.ScriptHash
             }, (k, g) => new
             {
-                AssetId = k.AssetId,
+                k.AssetId,
                 Value = g.Aggregate(BigInteger.Zero, (x, y) => x + y.Value.Value),
-                Account = k.Account
+                k.Account
             }).ToArray();
             Transaction tx;
             List<TransactionAttribute> attributes = new List<TransactionAttribute>();
+
+            if (comboBoxFrom.SelectedItem == null)
+            {
+                FromAddress = null;
+            }
+            else
+            {
+                FromAddress = ((string)comboBoxFrom.SelectedItem).ToScriptHash();
+            }
+
             if (cOutputs.Length == 0)
             {
                 tx = new ContractTransaction();
             }
             else
             {
-                UInt160[] addresses = Program.CurrentWallet.GetAccounts().Select(p => p.ScriptHash).ToArray();
+                UInt160[] addresses;
+                if (FromAddress != null)
+                {
+                    addresses = Program.CurrentWallet.GetAccounts().Where(e => e.ScriptHash.Equals(FromAddress)).Select(p => p.ScriptHash).ToArray();
+                }
+                else
+                {
+                    addresses = Program.CurrentWallet.GetAccounts().Where(e => !e.WatchOnly).Select(p => p.ScriptHash).ToArray();
+                }
                 HashSet<UInt160> sAttributes = new HashSet<UInt160>();
                 using (ScriptBuilder sb = new ScriptBuilder())
                 {
@@ -57,18 +77,23 @@ namespace Cam.UI
                         byte[] script;
                         using (ScriptBuilder sb2 = new ScriptBuilder())
                         {
+
                             foreach (UInt160 address in addresses)
+                            {
                                 sb2.EmitAppCall(output.AssetId, "balanceOf", address);
+                            }
+
                             sb2.Emit(OpCode.DEPTH, OpCode.PACK);
                             script = sb2.ToArray();
                         }
                         ApplicationEngine engine = ApplicationEngine.Run(script);
                         if (engine.State.HasFlag(VMState.FAULT)) return null;
-                        var balances = engine.EvaluationStack.Pop().GetArray().Reverse().Zip(addresses, (i, a) => new
+                        var balances = ((VMArray)engine.ResultStack.Pop()).AsEnumerable().Reverse().Zip(addresses, (i, a) => new
                         {
                             Account = a,
                             Value = i.GetBigInteger()
-                        }).ToArray();
+                        }).Where(p => p.Value != 0).ToArray();
+
                         BigInteger sum = balances.Aggregate(BigInteger.Zero, (x, y) => x + y.Value);
                         if (sum < output.Value) return null;
                         if (sum != output.Value)
@@ -117,8 +142,30 @@ namespace Cam.UI
                 });
             tx.Attributes = attributes.ToArray();
             tx.Outputs = txOutListBox1.Items.Where(p => p.AssetId is UInt256).Select(p => p.ToTxOutput()).ToArray();
-            if (tx is ContractTransaction ctx)
-                tx = Program.CurrentWallet.MakeTransaction(ctx,change_address: ChangeAddress, fee :Fee);
+            var tempOuts = tx.Outputs;
+            if (tx is ContractTransaction copyTx)
+            {
+                copyTx.Witnesses = new Witness[0];
+                copyTx = Program.CurrentWallet.MakeTransaction(copyTx, FromAddress, change_address: ChangeAddress, fee: Fee);
+                if (copyTx == null) return null;
+                ContractParametersContext transContext = new ContractParametersContext(copyTx);
+                Program.CurrentWallet.Sign(transContext);
+                if (transContext.Completed)
+                {
+                    copyTx.Witnesses = transContext.GetWitnesses();
+                }
+                if (copyTx.Size > 1024)
+                {
+                    Fixed8 PriorityFee = Fixed8.FromDecimal(0.001m) + Fixed8.FromDecimal(copyTx.Size * 0.00001m);
+                    if (Fee > PriorityFee) PriorityFee = Fee;
+                    if (!Helper.CostRemind(Fixed8.Zero, PriorityFee)) return null;
+                    tx = Program.CurrentWallet.MakeTransaction(new ContractTransaction
+                    {
+                        Outputs = tempOuts,
+                        Attributes = tx.Attributes
+                    }, FromAddress, change_address: ChangeAddress, fee: PriorityFee);
+                }
+            }
             return tx;
         }
 
@@ -134,19 +181,9 @@ namespace Cam.UI
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-
-
-            if(groupBox1.Visible)
-            {
-                groupBox1.Visible = false;
-                this.Height = 411;
-            }
-            else
-            {
-                groupBox1.Visible = true;
-                this.Height = 511;
-            }
+            button2.Visible = false;
+            groupBox1.Visible = true;
+            this.Height = 570;
         }
     }
 }

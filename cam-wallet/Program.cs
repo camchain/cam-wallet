@@ -1,6 +1,4 @@
-﻿using Cam.Core;
-using Cam.Implementations.Blockchains.LevelDB;
-using Cam.Network;
+﻿using Cam.Persistence.LevelDB;
 using Cam.Properties;
 using Cam.UI;
 using Cam.Wallets;
@@ -18,7 +16,7 @@ namespace Cam
 {
     internal static class Program
     {
-        public static LocalNode LocalNode;
+        public static CamSystem CamSystem;
         public static Wallet CurrentWallet;
         public static MainForm MainForm;
 
@@ -26,25 +24,28 @@ namespace Cam
         {
             using (FileStream fs = new FileStream("error.log", FileMode.Create, FileAccess.Write, FileShare.None))
             using (StreamWriter w = new StreamWriter(fs))
-            {
-                PrintErrorLogs(w, (Exception)e.ExceptionObject);
-            }
+                if (e.ExceptionObject is Exception ex)
+                {
+                    PrintErrorLogs(w, ex);
+                }
+                else
+                {
+                    w.WriteLine(e.ExceptionObject.GetType());
+                    w.WriteLine(e.ExceptionObject);
+                }
         }
-        /// <summary>
-        /// 安装证书服务器的根证书
-        /// </summary>
-        /// <returns></returns>
+
         private static bool InstallCertificate()
         {
             if (!Settings.Default.InstallCertificate) return true;
             using (X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
-            using (X509Certificate2 cert = new X509Certificate2(Resources.CamCertificate))
+            using (X509Certificate2 cert = new X509Certificate2(Resources.CamchainCertificate))
             {
                 store.Open(OpenFlags.ReadOnly);
                 if (store.Certificates.Contains(cert)) return true;
             }
             using (X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine))
-            using (X509Certificate2 cert = new X509Certificate2(Resources.CamCertificate))
+            using (X509Certificate2 cert = new X509Certificate2(Resources.CamchainCertificate))
             {
                 try
                 {
@@ -74,38 +75,38 @@ namespace Cam
                 MessageBox.Show(Strings.InstallCertificateCancel);
                 return true;
             }
-        }        
+        }
 
         [STAThread]
         public static void Main()
         {
-            uint time = DateTime.Now.AddHours(4).ToTimestamp();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-           
-            //判断是否安装了根证书
-            if (!InstallCertificate()) return;
-            
-            const string PeerStatePath = "peers.dat";
-            if (File.Exists(PeerStatePath))
+            XDocument xdoc = null;
+            try
             {
-                using (FileStream fs = new FileStream(PeerStatePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                xdoc = XDocument.Load("https://raw.githubusercontent.com/camchain/cam-gui/master/update.xml");
+            }
+            catch { }
+            if (xdoc != null)
+            {
+                Version version = Assembly.GetExecutingAssembly().GetName().Version;
+                Version minimum = Version.Parse(xdoc.Element("update").Attribute("minimum").Value);
+                if (version < minimum)
                 {
-                    LocalNode.LoadState(fs);
+                    using (UpdateDialog dialog = new UpdateDialog(xdoc))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    return;
                 }
             }
-
-            using (Blockchain.RegisterBlockchain(new LevelDBBlockchain(Settings.Default.Paths.Chain)))                
-            using (LocalNode = new LocalNode())
+            if (!InstallCertificate()) return;
+            using (LevelDBStore store = new LevelDBStore(Settings.Default.Paths.Chain))
+            using (CamSystem = new CamSystem(store))
             {
-                LocalNode.UpnpEnabled = true;
-                Application.Run(MainForm = new MainForm());
-            }
-
-            using (FileStream fs = new FileStream(PeerStatePath, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                LocalNode.SaveState(fs);
+                Application.Run(MainForm = new MainForm(xdoc));
             }
         }
 

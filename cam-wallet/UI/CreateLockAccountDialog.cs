@@ -12,7 +12,7 @@ namespace Cam.UI
         public CreateLockAccountDialog()
         {
             InitializeComponent();
-            comboBox1.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.IsStandard).Select(p => p.GetKey()).ToArray());
+            comboBox1.Items.AddRange(Program.CurrentWallet.GetAccounts().Where(p => !p.WatchOnly && p.Contract.Script.IsStandardContract()).Select(p => p.GetKey()).ToArray());
         }
 
         public Contract GetContract()
@@ -22,9 +22,8 @@ namespace Cam.UI
             {
                 sb.EmitPush(GetKey().PublicKey);
                 sb.EmitPush(timestamp);
-
-
-                sb.Emit(OpCode.LOCK);
+                // Lock 2.0 in mainnet tx:4e84015258880ced0387f34842b1d96f605b9cc78b308e1f0d876933c2c9134b
+                sb.EmitAppCall(UInt160.Parse("d3cce84d0800172d09c88ccad61130611bd047a4"));
                 return Contract.Create(new[] { ContractParameterType.Signature }, sb.ToArray());
             }
         }

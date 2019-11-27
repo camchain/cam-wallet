@@ -117,68 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 15</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 17</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Dirección:</value>
-  </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 12</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>39, 44</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 17</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Hash del script:</value>
-  </data>
-  <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 41</value>
-  </data>
-  <data name="textBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>494, 273</value>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Firma</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>Código del script</value>
+    <value>Entrada</value>
   </data>
-  <data name="textBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>488, 251</value>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Salida</value>
   </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>431, 378</value>
+  <data name="button2.Text" xml:space="preserve">
+    <value>Copiar</value>
   </data>
-  <data name="button1.Text" xml:space="preserve">
+  <data name="button3.Text" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 73</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 17</value>
-  </data>
-  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>143, 70</value>
-  </data>
-  <data name="textBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>363, 23</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>518, 413</value>
+  <data name="button4.Text" xml:space="preserve">
+    <value>Emitir</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Ver contrato</value>
+    <value>Firma</value>
   </data>
 </root>

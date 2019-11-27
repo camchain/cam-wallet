@@ -8,7 +8,7 @@ namespace Cam.UI
 
         public override string ToString()
         {
-            return $"{Wallet.ToAddress(ScriptHash)}\t{Value}\t{AssetName}";
+            return $"{ScriptHash.ToAddress()}\t{Value}\t{AssetName}";
         }
     }
 }

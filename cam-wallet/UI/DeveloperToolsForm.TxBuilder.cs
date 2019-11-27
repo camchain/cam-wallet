@@ -1,4 +1,4 @@
-using Cam.Core;
+using Cam.Network.P2P.Payloads;
 using Cam.Properties;
 using Cam.SmartContract;
 using Cam.UI.Wrappers;
@@ -20,6 +20,7 @@ namespace Cam.UI
                 TransactionType.ClaimTransaction,
                 TransactionType.IssueTransaction,
                 TransactionType.InvocationTransaction,
+                TransactionType.StateTransaction,
             });
             button6.Enabled = Program.CurrentWallet != null;
             button7.Enabled = Program.CurrentWallet != null;
@@ -27,6 +28,7 @@ namespace Cam.UI
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedItem is null) return;
             string typeName = $"{typeof(TransactionWrapper).Namespace}.{comboBox1.SelectedItem}Wrapper";
             propertyGrid1.SelectedObject = Assembly.GetExecutingAssembly().CreateInstance(typeName);
         }
@@ -68,7 +70,7 @@ namespace Cam.UI
                 tx.Outputs.Add(new TransactionOutputWrapper
                 {
                     AssetId = (UInt256)output.AssetId,
-                    Value = new Fixed8((long)output.Value.Value),
+                    Value = output.Value.ToFixed8(),
                     ScriptHash = output.ScriptHash
                 });
             }
